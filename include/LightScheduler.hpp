@@ -3,8 +3,6 @@
 
 #include "ITimeService.hpp"
 #include "ILightController.hpp"
-//#include "TimeService.hpp"
-//#include "LightController.hpp"
 #include <vector>
 
 using namespace std;
