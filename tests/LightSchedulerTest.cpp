@@ -4,6 +4,7 @@
 #include "LightScheduler.hpp"
 #include "LightController.hpp"
 #include "TimeService.hpp"
+#include "LightController.hpp"
 
 using namespace Camax;
 using namespace std;
@@ -11,7 +12,7 @@ using namespace std;
 class LightSchedulerTest : public ::testing::Test
 {
 public:
-    LightSchedulerTest()
+    LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
     {
 
     }

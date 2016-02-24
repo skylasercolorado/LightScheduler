@@ -3,8 +3,8 @@
 
 #include "ITimeService.hpp"
 #include "ILightController.hpp"
-#include "TimeService.hpp"
-#include "LightController.hpp"
+//#include "TimeService.hpp"
+//#include "LightController.hpp"
 #include <vector>
 
 using namespace std;
@@ -25,6 +25,8 @@ namespace Camax
     class LightScheduler
     {
     public:
+        LightScheduler(ITimeService &_timeService, ILightController &_lightController) :
+            timeService(_timeService), lightController(_lightController) {}
         void ScheduleTurnOn(int id, TimeStatus day, int minute);
         void ScheduleTurnOff(int id, TimeStatus day, int minute);
         void RemoveSchedule();
@@ -32,8 +34,8 @@ namespace Camax
     
     private:
         vector<ScheduledLightEvent> scheduledLightEvents;
-        TimeService timeService;
-        LightController lightController;
+        ITimeService &timeService;
+        ILightController &lightController;
         void validateMinute(int minute);
         void validateDay(int day);
         void validateDayMinute(int day, int minute);

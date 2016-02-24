@@ -24,6 +24,7 @@ namespace Camax
 
     class ITimeService
     {
+    public:
         virtual Time& getTime() = 0;
         virtual void setPeriodicAlarm() = 0;
     };
