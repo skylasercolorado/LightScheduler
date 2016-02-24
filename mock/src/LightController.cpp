@@ -7,28 +7,28 @@ int LightController::lastState = LightStateUnknown;
 
 void LightController::reset()
 {
-  LightController::lastId = LightIdUnknown;
-  LightController::lastState = LightStateUnknown;
+    LightController::lastId = LightIdUnknown;
+    LightController::lastState = LightStateUnknown;
 }
 
 void LightController::turnOn(int id)
 {
-  lastId = id;
-  lastState = LightStateOn;
+    lastId = id;
+    lastState = LightStateOn;
 }
 
 void LightController::turnOff(int id)
 {
-  lastId = id;
-  lastState = LightStateOff;
+    lastId = id;
+    lastState = LightStateOff;
 }
 
 int LightController::getLastId()
 {
-  return lastId;
+    return lastId;
 }
 
 int LightController::getLastState()
 {
-  return lastState;
+    return lastState;
 }

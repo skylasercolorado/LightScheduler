@@ -3,30 +3,30 @@
 
 namespace Camax
 {
-  enum TimeStatus
+    enum TimeStatus
     {
-      Monday,
-      Tuesday,
-      Wednesday,
-      Thursday,
-      Friday,
-      Saturday,
-      Sunday,
-      Everyday,
-      TimeUnknown // Marker of last element in enumeration
+        Monday,
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday,
+        Everyday,
+        TimeUnknown // Marker of last element in enumeration
     };
 
-  struct Time
-   {
-     int minuteOfDay;
-     int dayOfWeek;
-   };
+    struct Time
+    {
+        int minuteOfDay;
+        int dayOfWeek;
+    };
 
-  class ITimeService
-  {
-    virtual Time& getTime() = 0;
-    virtual void setPeriodicAlarm() = 0;
-  };
+    class ITimeService
+    {
+        virtual Time& getTime() = 0;
+        virtual void setPeriodicAlarm() = 0;
+    };
 }
 
 #endif // CAMAX_ITIMESERVICE_HPP
