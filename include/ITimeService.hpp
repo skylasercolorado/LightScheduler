@@ -1,6 +1,9 @@
 #ifndef CAMAX_ITIMESERVICE_HPP
 #define CAMAX_ITIMESERVICE_HPP
 
+#include <iostream>
+using namespace std;
+
 namespace Camax
 {
     enum TimeStatus
@@ -27,6 +30,7 @@ namespace Camax
     public:
         virtual Time& getTime() = 0;
         virtual void setPeriodicAlarm() = 0;
+	virtual void hello();
     };
 }
 
