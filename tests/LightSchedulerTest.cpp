@@ -29,7 +29,6 @@ class LightSchedulerTest : public ::testing::Test
     }
 
     LightScheduler lightScheduler;
-
     LightController lightControllerStub;
     TimeService timeServiceStub;
 };
@@ -61,10 +60,8 @@ TEST_F(LightSchedulerTest, Set)
 TEST_F(LightSchedulerTest, ScheduleOnEverydayNotTimeYet)
 {
     lightScheduler.ScheduleTurnOn(3, Everyday, 1200);
-    //TimeService::setDay(Monday);
     timeServiceStub.setDay(Monday);
     timeServiceStub.setMinute(1199);
-    //TimeService::setMinute(1199);
     lightScheduler.WakeUp();
 
     EXPECT_EQ(LightIdUnknown, lightControllerStub.getLastId());
