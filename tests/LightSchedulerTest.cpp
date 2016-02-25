@@ -2,9 +2,8 @@
 #include "gmock/gmock.h"
 
 #include "LightScheduler.hpp"
-#include "LightController.hpp"
-#include "TimeService.hpp"
-#include "LightController.hpp"
+#include "LightControllerStub.hpp"
+#include "TimeServiceStub.hpp"
 
 using namespace Camax;
 using namespace std;
@@ -19,8 +18,8 @@ class LightSchedulerTest : public ::testing::Test
 
     virtual void SetUp()
     {
-	LightController::reset();
-	TimeService::reset();
+	LightControllerStub::reset();
+	TimeServiceStub::reset();
     }
 
     virtual void TearDown()
@@ -29,8 +28,8 @@ class LightSchedulerTest : public ::testing::Test
     }
 
     LightScheduler lightScheduler;
-    LightController lightControllerStub;
-    TimeService timeServiceStub;
+    LightControllerStub lightControllerStub;
+    TimeServiceStub timeServiceStub;
 };
 
 // Testing the light controller stub after reset
@@ -97,8 +96,8 @@ TEST_F(LightSchedulerTest, NoScheduleNothingHappens)
     timeServiceStub.setMinute(100);
     lightScheduler.WakeUp();
 
-    EXPECT_EQ(LightIdUnknown, LightController::getLastId());
-    EXPECT_EQ(LightStateUnknown, LightController::getLastState());
+    EXPECT_EQ(LightIdUnknown, lightControllerStub.getLastId());
+    EXPECT_EQ(LightStateUnknown, lightControllerStub.getLastState());
 }
 
 
