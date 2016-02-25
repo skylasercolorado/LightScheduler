@@ -30,7 +30,21 @@ class LightSchedulerTest : public ::testing::Test
     LightScheduler lightScheduler;
     LightControllerStub lightControllerStub;
     TimeServiceStub timeServiceStub;
+    void setTimeTo(Day day, int minute);
+    void checkLightState(int id, LightStatus lightStatus);
 };
+
+void LightSchedulerTest::setTimeTo(Day day, int minute)
+{
+    timeServiceStub.setDay(day);
+    timeServiceStub.setMinute(minute);
+}
+
+void LightSchedulerTest::checkLightState(int id, LightStatus lightStatus)
+{
+    EXPECT_EQ(id, lightControllerStub.getLastId());
+    EXPECT_EQ(lightStatus, lightControllerStub.getLastState());
+}
 
 // Testing the light controller stub after reset
 TEST_F(LightSchedulerTest, NoChangeToLightsDuringInitialization)
@@ -59,45 +73,37 @@ TEST_F(LightSchedulerTest, Set)
 TEST_F(LightSchedulerTest, ScheduleOnEverydayNotTimeYet)
 {
     lightScheduler.ScheduleTurnOn(3, Everyday, 1200);
-    timeServiceStub.setDay(Monday);
-    timeServiceStub.setMinute(1199);
+    setTimeTo(Monday, 1199);
     lightScheduler.WakeUp();
 
-    EXPECT_EQ(LightIdUnknown, lightControllerStub.getLastId());
-    EXPECT_EQ(LightStateUnknown, lightControllerStub.getLastState());
+    checkLightState(LightIdUnknown, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleOnEverydayItsTime)
 {
     lightScheduler.ScheduleTurnOn(3, Everyday, 1200);
-    timeServiceStub.setDay(Monday);
-    timeServiceStub.setMinute(1200);
+    setTimeTo(Monday, 1200);
     lightScheduler.WakeUp();
 
-    EXPECT_EQ(3, lightControllerStub.getLastId());
-    EXPECT_EQ(LightStateOn, lightControllerStub.getLastState());
+    checkLightState(3, LightStateOn);
 }
 
 TEST_F(LightSchedulerTest, ScheduleOffEverydayItsTime)
 {
     lightScheduler.ScheduleTurnOff(3, Everyday, 1200);
-    timeServiceStub.setDay(Monday);
-    timeServiceStub.setMinute(1200);
+    setTimeTo(Monday, 1200);
     lightScheduler.WakeUp();
 
-    EXPECT_EQ(3, lightControllerStub.getLastId());
-    EXPECT_EQ(LightStateOff, lightControllerStub.getLastState());
+    checkLightState(3, LightStateOff);
 }
 
 
 TEST_F(LightSchedulerTest, NoScheduleNothingHappens)
 {
-    timeServiceStub.setDay(Monday);
-    timeServiceStub.setMinute(100);
+    setTimeTo(Monday, 100);
     lightScheduler.WakeUp();
 
-    EXPECT_EQ(LightIdUnknown, lightControllerStub.getLastId());
-    EXPECT_EQ(LightStateUnknown, lightControllerStub.getLastState());
+    checkLightState(LightIdUnknown, LightStateUnknown);
 }
 
 
