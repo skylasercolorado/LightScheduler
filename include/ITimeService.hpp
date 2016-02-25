@@ -30,7 +30,7 @@ namespace Camax
     public:
         virtual Time& getTime() = 0;
         virtual void setPeriodicAlarm() = 0;
-	static void validateMinute(int minute);
+        static void validateMinute(int minute);
         static void validateDay(int day);
         static void validateDayMinute(int day, int minute);
     };
