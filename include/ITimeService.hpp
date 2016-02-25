@@ -16,6 +16,8 @@ namespace Camax
         Saturday,
         Sunday,
         Everyday,
+        Weekday,
+        Weekend,
         Unknown = -1 // Marker of last element in enumeration
     };
 
