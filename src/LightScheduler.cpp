@@ -6,43 +6,16 @@
 using namespace Camax;
 using namespace std;
 
-void LightScheduler::validateMinute(int minute)
-{
-    const int hoursInDay = 24;
-    const int minutesInHour = 60;
-
-    if (minute < 0 || minute > ((hoursInDay * minutesInHour) - 1))
-    {
-        cout << "\n validateMinute() exception, minute: " << minute;
-        throw range_error ("minutes must be between 0 and 1439");
-    }
-}
-
-void LightScheduler::validateDay(int day)
-{
-    if (day < Monday || day > Everyday)
-    {
-        cout << "\n validateDay() exception, day: " << day;
-        throw range_error ("day must be between Monday and Everyday");
-    }
-}
-
-void LightScheduler::validateDayMinute(int day, int minute)
-{
-    validateDay(day);
-    validateMinute(minute);
-}
-
 void LightScheduler::ScheduleTurnOn(int id, TimeStatus day, int minute)
 {
-    validateDayMinute(day, minute);
+    ITimeService::validateDayMinute(day, minute);
 
     scheduledLightEvents.push_back(ScheduledLightEvent(id, day, minute, LightStateOn));
 }
 
 void LightScheduler::ScheduleTurnOff(int id, TimeStatus day, int minute)
 {
-    validateDayMinute(day, minute);
+    ITimeService::validateDayMinute(day, minute);
 
     scheduledLightEvents.push_back(ScheduledLightEvent(id, day, minute, LightStateOff));
 }

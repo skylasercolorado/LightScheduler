@@ -34,9 +34,6 @@ namespace Camax
         vector<ScheduledLightEvent> scheduledLightEvents;
         ITimeService &timeService;
         ILightController &lightController;
-        void validateMinute(int minute);
-        void validateDay(int day);
-        void validateDayMinute(int day, int minute);
     };
 }
 

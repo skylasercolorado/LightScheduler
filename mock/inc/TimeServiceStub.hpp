@@ -13,8 +13,6 @@ namespace Camax
         // The actual mock starts from hereon forward
         static void setMinute(int minute);
         static void setDay(int day);
-        static void validateMinute(int minute);
-        static void validateDay(int day);
         static void reset();
 
     private:

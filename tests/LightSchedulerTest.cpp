@@ -96,8 +96,6 @@ TEST_F(LightSchedulerTest, NoScheduleNothingHappens)
     timeServiceStub.setMinute(100);
     lightScheduler.WakeUp();
 
-    timeServiceStub.hello();
-
     EXPECT_EQ(LightIdUnknown, lightControllerStub.getLastId());
     EXPECT_EQ(LightStateUnknown, lightControllerStub.getLastState());
 }
