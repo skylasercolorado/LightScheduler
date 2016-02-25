@@ -14,7 +14,7 @@ void ITimeService::validateMinute(int minute)
     }
 }
 
-void ITimeService::validateDay(int day)
+void ITimeService::validateDay(Day day)
 {
     if (day < Monday || day > Everyday)
     {
@@ -25,6 +25,6 @@ void ITimeService::validateDay(int day)
 
 void ITimeService::validateDayMinute(int day, int minute)
 {
-    validateDay(day);
+    validateDay((Monday));
     validateMinute(minute);
 }	

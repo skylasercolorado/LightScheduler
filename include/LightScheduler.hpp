@@ -12,11 +12,11 @@ namespace Camax
     struct ScheduledLightEvent
     {
         int id;
-        TimeStatus day;
+        Day day;
         int minuteOfDay;
         LightStatus lightStatus;
     
-        ScheduledLightEvent(int _id, TimeStatus _day, int _minuteOfDay, LightStatus _lightStatus) :
+        ScheduledLightEvent(int _id, Day _day, int _minuteOfDay, LightStatus _lightStatus) :
                 id(_id), day(_day), minuteOfDay(_minuteOfDay), lightStatus(_lightStatus)  {}
     };
   
@@ -25,8 +25,8 @@ namespace Camax
     public:
         LightScheduler(ITimeService &_timeService, ILightController &_lightController) :
             timeService(_timeService), lightController(_lightController) {}
-        void ScheduleTurnOn(int id, TimeStatus day, int minute);
-        void ScheduleTurnOff(int id, TimeStatus day, int minute);
+        void ScheduleTurnOn(int id, Day day, int minute);
+        void ScheduleTurnOff(int id, Day day, int minute);
         void RemoveSchedule();
         void WakeUp();
     

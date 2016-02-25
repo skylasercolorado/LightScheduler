@@ -42,8 +42,8 @@ TEST_F(LightSchedulerTest, NoChangeToLightsDuringInitialization)
 // Testing the time service stub after reset
 TEST_F(LightSchedulerTest, Create)
 {
-    EXPECT_EQ(TimeUnknown, timeServiceStub.getTime().minuteOfDay);
-    EXPECT_EQ(TimeUnknown, timeServiceStub.getTime().dayOfWeek);
+    EXPECT_EQ(Unknown, timeServiceStub.getTime().minuteOfDay);
+    EXPECT_EQ(Unknown, timeServiceStub.getTime().dayOfWeek);
 }
 
 // Testing get/set of time service stub

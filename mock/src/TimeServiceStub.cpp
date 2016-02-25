@@ -5,12 +5,12 @@
 using namespace Camax;
 using namespace std;
 
-Time TimeServiceStub::time = {TimeUnknown, TimeUnknown};
+Time TimeServiceStub::time = {Unknown, Unknown};
 
 void TimeServiceStub::reset()
 {
-    time.minuteOfDay = TimeUnknown;
-    time.dayOfWeek = TimeUnknown;
+    time.minuteOfDay = Unknown;
+    time.dayOfWeek = Unknown;
 }
 
 Time& TimeServiceStub::getTime()
@@ -31,6 +31,6 @@ void TimeServiceStub::setMinute(int minute)
 
 void TimeServiceStub::setDay(int day)
 {
-    validateDay(day);
+    validateDay((Monday));
     time.dayOfWeek = day;
 }

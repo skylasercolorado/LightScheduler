@@ -6,14 +6,14 @@
 using namespace Camax;
 using namespace std;
 
-void LightScheduler::ScheduleTurnOn(int id, TimeStatus day, int minute)
+void LightScheduler::ScheduleTurnOn(int id, Day day, int minute)
 {
     ITimeService::validateDayMinute(day, minute);
 
     scheduledLightEvents.push_back(ScheduledLightEvent(id, day, minute, LightStateOn));
 }
 
-void LightScheduler::ScheduleTurnOff(int id, TimeStatus day, int minute)
+void LightScheduler::ScheduleTurnOff(int id, Day day, int minute)
 {
     ITimeService::validateDayMinute(day, minute);
 

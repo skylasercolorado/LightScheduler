@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Camax
 {
-    enum TimeStatus
+    enum Day : int
     {
         Monday,
         Tuesday,
@@ -16,7 +16,7 @@ namespace Camax
         Saturday,
         Sunday,
         Everyday,
-        TimeUnknown // Marker of last element in enumeration
+        Unknown = -1 // Marker of last element in enumeration
     };
 
     struct Time
@@ -31,7 +31,7 @@ namespace Camax
         virtual Time& getTime() = 0;
         virtual void setPeriodicAlarm() = 0;
         static void validateMinute(int minute);
-        static void validateDay(int day);
+        static void validateDay(Day day);
         static void validateDayMinute(int day, int minute);
     };
 }
