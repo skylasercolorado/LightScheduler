@@ -106,4 +106,20 @@ TEST_F(LightSchedulerTest, NoScheduleNothingHappens)
     checkLightState(LightIdUnknown, LightStateUnknown);
 }
 
+TEST_F(LightSchedulerTest, ScheduleTuesdayButItsMonday)
+{
+    lightScheduler.ScheduleTurnOn(3, Tuesday, 1200);
+    setTimeTo(Monday, 1200);
+    lightScheduler.WakeUp();
 
+    checkLightState(LightIdUnknown, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, ScheduleTuesdayAndItsTuesday)
+{
+    lightScheduler.ScheduleTurnOn(3, Tuesday, 1200);
+    setTimeTo(Tuesday, 1200);
+    lightScheduler.WakeUp();
+
+    checkLightState(3, LightStateOn);
+}
