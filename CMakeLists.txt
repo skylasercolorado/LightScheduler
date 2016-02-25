@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(helloClion)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # Project directory structure. DO NOT CHANGE.
 set(APP_DIR "app") # Where the application main() code resides
