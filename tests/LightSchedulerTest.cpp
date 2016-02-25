@@ -123,3 +123,48 @@ TEST_F(LightSchedulerTest, ScheduleTuesdayAndItsTuesday)
 
     checkLightState(3, LightStateOn);
 }
+
+TEST_F(LightSchedulerTest, ScheduleWeekEndItsFriday)
+{
+    lightScheduler.ScheduleTurnOn(3, Weekend, 1200);
+    setTimeTo(Friday, 1200);
+    lightScheduler.WakeUp();
+
+    checkLightState(LightIdUnknown, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, ScheduleWeekEndItsSaturday)
+{
+    lightScheduler.ScheduleTurnOn(3, Weekend, 1200);
+    setTimeTo(Saturday, 1200);
+    lightScheduler.WakeUp();
+
+    checkLightState(3, LightStateOn);
+}
+
+TEST_F(LightSchedulerTest, ScheduleWeekEndItsMonday)
+{
+    lightScheduler.ScheduleTurnOn(3, Weekend, 1200);
+    setTimeTo(Monday, 1200);
+    lightScheduler.WakeUp();
+
+    checkLightState(LightIdUnknown, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, ScheduleWeekdayItsMonday)
+{
+    lightScheduler.ScheduleTurnOn(3, Weekday, 1200);
+    setTimeTo(Monday, 1200);
+    lightScheduler.WakeUp();
+
+    checkLightState(3, LightStateOn);
+}
+
+TEST_F(LightSchedulerTest, ScheduleWeekdayItsSaturday)
+{
+    lightScheduler.ScheduleTurnOn(3, Weekday, 1200);
+    setTimeTo(Saturday, 1200);
+    lightScheduler.WakeUp();
+
+    checkLightState(LightIdUnknown, LightStateUnknown);
+}

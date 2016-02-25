@@ -27,12 +27,18 @@ void LightScheduler::RemoveSchedule()
 
 void LightScheduler::WakeUp()
 {
+
     for(vector<ScheduledLightEvent>::iterator it = scheduledLightEvents.begin();
         it != scheduledLightEvents.end(); it++)
     {
-        if((it->day == timeService.getTime().dayOfWeek ||
-            it->day == Everyday) &&
-           it->minuteOfDay == timeService.getTime().minuteOfDay)
+        int today = timeService.getTime().dayOfWeek;
+        int thisMinute = timeService.getTime().minuteOfDay;
+
+        if((it->day == today ||
+            it->day == Everyday ||
+            (it->day == Weekend && (today == Saturday || today == Sunday )) ||
+            (it->day == Weekday && (today >= Monday && today <= Friday ))
+           ) && it->minuteOfDay == thisMinute)
         {
             switch (it->lightStatus)
             {
