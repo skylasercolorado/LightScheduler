@@ -11,9 +11,12 @@ using namespace std;
 class LightSchedulerTest : public ::testing::Test
 {
     public:
+
+    const int AlarmPeriod = 60;
+
     LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
     {
-
+        timeServiceStub.setPeriodicAlarm(AlarmPeriod, (TimeServiceCallBack)&Camax::LightScheduler::WakeUp);
     }
 
     virtual void SetUp()
@@ -167,4 +170,14 @@ TEST_F(LightSchedulerTest, ScheduleWeekdayItsSaturday)
     lightScheduler.WakeUp();
 
     checkLightState(LightIdUnknown, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, CallbackTest)
+{
+//    EXPECT_EQ(&lightScheduler.WakeUp, timeServiceStub.getAlarmCallBack());
+//    EXPECT_EQ(&Camax::LightScheduler::WakeUp, timeServiceStub.getAlarmCallBack());
+    ASSERT_TRUE((void*)&Camax::LightScheduler::WakeUp == (void*)timeServiceStub.getAlarmCallBack());
+//    ASSERT_TRUE(static_cast<void*>&Camax::LightScheduler::WakeUp == static_cast<void*>timeServiceStub.getAlarmCallBack());
+
+    EXPECT_EQ(AlarmPeriod, timeServiceStub.getAlarmPeriod());
 }
