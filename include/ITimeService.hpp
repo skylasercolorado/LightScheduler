@@ -2,6 +2,7 @@
 #define CAMAX_ITIMESERVICE_HPP
 
 #include <iostream>
+#include "Subject.hpp"
 using namespace std;
 
 namespace Camax
@@ -35,6 +36,10 @@ namespace Camax
         static void validateMinute(int minute);
         static void validateDay(Day day);
         static void validateDayMinute(int day, int minute);
+
+        enum class TSEvents { AlarmActive, Error};
+
+        Subject<TSEvents> events;
     };
 }
 

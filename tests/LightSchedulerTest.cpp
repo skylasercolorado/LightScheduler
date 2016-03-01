@@ -4,16 +4,22 @@
 #include "LightScheduler.hpp"
 #include "LightControllerStub.hpp"
 #include "TimeServiceStub.hpp"
+#include <functional>
 
 using namespace Camax;
 using namespace std;
+
+void foo()
+{
+    cout << "\nfoo\n";
+}
 
 class LightSchedulerTest : public ::testing::Test
 {
     public:
     LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
     {
-
+        timeServiceStub.events.registerObserver(ITimeService::TSEvents::AlarmActive, std::bind(&LightScheduler::WakeUp, &lightScheduler));
     }
 
     virtual void SetUp()
@@ -167,4 +173,14 @@ TEST_F(LightSchedulerTest, ScheduleWeekdayItsSaturday)
     lightScheduler.WakeUp();
 
     checkLightState(LightIdUnknown, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
+{
+    lightScheduler.ScheduleTurnOn(3, Monday, 1200);
+    setTimeTo(Monday, 1200);
+
+    timeServiceStub.events.notify(ITimeService::TSEvents::AlarmActive);
+
+    checkLightState(3, LightStateOn);
 }
