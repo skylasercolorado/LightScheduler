@@ -4,9 +4,15 @@
 #include "LightScheduler.hpp"
 #include "LightControllerStub.hpp"
 #include "TimeServiceStub.hpp"
+#include <functional>
 
 using namespace Camax;
 using namespace std;
+
+void foo()
+{
+    cout << "\nfoo\n";
+}
 
 class LightSchedulerTest : public ::testing::Test
 {
@@ -16,7 +22,7 @@ class LightSchedulerTest : public ::testing::Test
 
     LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
     {
-        timeServiceStub.setPeriodicAlarm(AlarmPeriod, (TimeServiceCallBack)&Camax::LightScheduler::WakeUp);
+        timeServiceStub.events.registerObserver(ITimeService::TSEvents::AlarmActive, std::bind(&LightScheduler::WakeUp, &lightScheduler));
     }
 
     virtual void SetUp()
@@ -172,12 +178,12 @@ TEST_F(LightSchedulerTest, ScheduleWeekdayItsSaturday)
     checkLightState(LightIdUnknown, LightStateUnknown);
 }
 
-TEST_F(LightSchedulerTest, CallbackTest)
+TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
 {
-//    EXPECT_EQ(&lightScheduler.WakeUp, timeServiceStub.getAlarmCallBack());
-//    EXPECT_EQ(&Camax::LightScheduler::WakeUp, timeServiceStub.getAlarmCallBack());
-    ASSERT_TRUE((void*)&Camax::LightScheduler::WakeUp == (void*)timeServiceStub.getAlarmCallBack());
-//    ASSERT_TRUE(static_cast<void*>&Camax::LightScheduler::WakeUp == static_cast<void*>timeServiceStub.getAlarmCallBack());
+    lightScheduler.ScheduleTurnOn(3, Monday, 1200);
+    setTimeTo(Monday, 1200);
 
-    EXPECT_EQ(AlarmPeriod, timeServiceStub.getAlarmPeriod());
+    timeServiceStub.events.notify(ITimeService::TSEvents::AlarmActive);
+
+    checkLightState(3, LightStateOn);
 }
