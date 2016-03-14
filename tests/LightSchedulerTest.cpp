@@ -187,3 +187,10 @@ TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
 
     checkLightState(3, LightStateOn);
 }
+
+TEST_F(LightSchedulerTest, SetAndGetAlaramPeriod)
+{
+    timeServiceStub.setPeriodicAlarm(23);
+
+    EXPECT_EQ(23, timeServiceStub.getAlarmPeriod());
+}

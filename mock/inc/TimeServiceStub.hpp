@@ -8,8 +8,8 @@ namespace Camax
     class TimeServiceStub : public ITimeService
     {
     public:
-        Time& getTime();
-        void setPeriodicAlarm(int periodInSeconds);
+        virtual Time& getTime();
+        virtual void setPeriodicAlarm(int periodInSeconds);
         // The actual mock starts from hereon forward
         static void setMinute(int minute);
         static void setDay(int day);
