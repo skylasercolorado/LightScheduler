@@ -31,14 +31,17 @@ namespace Camax
     class ITimeService
     {
     public:
+        enum class TimeServiceEvents { AlarmActive, Error};
+
         virtual Time& getTime() = 0;
         virtual void setPeriodicAlarm(int periodInSeconds) = 0;
         static void validateMinute(int minute);
         static void validateDay(Day day);
         static void validateDayMinute(int day, int minute);
+        void RegisterEventObserver(TimeServiceEvents event, std::function<void(TimeServiceEvents)> fn);
+        void NotifyObservers(TimeServiceEvents event);
 
-        enum class TimeServiceEvents { AlarmActive, Error};
-
+    private:
         Subject<TimeServiceEvents> events;
     };
 }

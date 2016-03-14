@@ -1,5 +1,6 @@
 #include "ITimeService.hpp"
 #include <stdexcept>
+
 using namespace Camax;
 
 void ITimeService::validateMinute(int minute)
@@ -27,4 +28,15 @@ void ITimeService::validateDayMinute(int day, int minute)
 {
     validateDay((Monday));
     validateMinute(minute);
-}	
+}
+
+void ITimeService::RegisterEventObserver(TimeServiceEvents event,  std::function<void(ITimeService::TimeServiceEvents)> fn)
+{
+    events.registerObserver(event, fn);
+}
+
+void ITimeService::NotifyObservers(TimeServiceEvents event)
+{
+    events.notify(event);
+}
+

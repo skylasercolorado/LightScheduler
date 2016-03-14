@@ -5,6 +5,7 @@
 
 using namespace Camax;
 using namespace std;
+using namespace std::placeholders;
 
 void LightScheduler::ScheduleTurnOn(int id, Day day, int minute)
 {
@@ -70,4 +71,9 @@ void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
             cout << "\nLightscheduler Notification Handler: Error event.\n";
             break;
     }
+}
+
+void LightScheduler::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event)
+{
+    timeService.RegisterEventObserver(event, std::bind(&LightScheduler::NotificationHandler, this, _1));
 }
