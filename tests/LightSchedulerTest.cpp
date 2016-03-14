@@ -8,11 +8,7 @@
 
 using namespace Camax;
 using namespace std;
-
-void foo()
-{
-    cout << "\nfoo\n";
-}
+using namespace std::placeholders;
 
 class LightSchedulerTest : public ::testing::Test
 {
@@ -20,15 +16,16 @@ class LightSchedulerTest : public ::testing::Test
 
     const int AlarmPeriod = 60;
 
+
     LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
     {
-        timeServiceStub.events.registerObserver(ITimeService::TSEvents::AlarmActive, std::bind(&LightScheduler::WakeUp, &lightScheduler));
+        timeServiceStub.events.registerObserver(ITimeService::TSEvents::AlarmActive, std::bind(&LightScheduler::NotificationHandler, &lightScheduler, _1));
     }
 
     virtual void SetUp()
     {
-	LightControllerStub::reset();
-	TimeServiceStub::reset();
+        LightControllerStub::reset();
+        TimeServiceStub::reset();
     }
 
     virtual void TearDown()
