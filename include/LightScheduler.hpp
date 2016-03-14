@@ -29,7 +29,7 @@ namespace Camax
         void ScheduleTurnOff(int id, Day day, int minute);
         void RemoveSchedule();
         void WakeUp();
-        void NotificationHandler(ITimeService::TSEvents event);
+        void NotificationHandler(ITimeService::TimeServiceEvents event);
     
     private:
         vector<ScheduledLightEvent> scheduledLightEvents;

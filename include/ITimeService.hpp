@@ -37,9 +37,9 @@ namespace Camax
         static void validateDay(Day day);
         static void validateDayMinute(int day, int minute);
 
-        enum class TSEvents { AlarmActive, Error};
+        enum class TimeServiceEvents { AlarmActive, Error};
 
-        Subject<TSEvents> events;
+        Subject<TimeServiceEvents> events;
     };
 }
 
