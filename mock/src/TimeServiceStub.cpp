@@ -7,7 +7,6 @@ using namespace std;
 
 Time TimeServiceStub::time = {Unknown, Unknown};
 int TimeServiceStub::periodInSeconds = 0;
-TimeServiceCallBack TimeServiceStub::callBackFunction = nullptr;
 
 void TimeServiceStub::reset()
 {
@@ -20,10 +19,9 @@ Time& TimeServiceStub::getTime()
     return time;
 }
 
-void TimeServiceStub::setPeriodicAlarm(int periodInSeconds, TimeServiceCallBack callBack)
+void TimeServiceStub::setPeriodicAlarm(int periodInSeconds)
 {
     this->periodInSeconds = periodInSeconds;
-    this->callBackFunction = callBack;
 }
 
 void TimeServiceStub::setMinute(int minute)
@@ -36,11 +34,6 @@ void TimeServiceStub::setDay(int day)
 {
     validateDay((Monday));
     time.dayOfWeek = day;
-}
-
-TimeServiceCallBack TimeServiceStub::getAlarmCallBack()
-{
-    return callBackFunction;
 }
 
 int TimeServiceStub::getAlarmPeriod()

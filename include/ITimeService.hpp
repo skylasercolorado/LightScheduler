@@ -28,13 +28,11 @@ namespace Camax
         int dayOfWeek;
     };
 
-    typedef void (*TimeServiceCallBack)();
-
     class ITimeService
     {
     public:
         virtual Time& getTime() = 0;
-        virtual void setPeriodicAlarm(int periodInSeconds, TimeServiceCallBack callBack) = 0;
+        virtual void setPeriodicAlarm(int periodInSeconds) = 0;
         static void validateMinute(int minute);
         static void validateDay(Day day);
         static void validateDayMinute(int day, int minute);
