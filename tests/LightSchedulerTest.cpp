@@ -20,6 +20,7 @@ class LightSchedulerTest : public ::testing::Test
     LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
     {
         timeServiceStub.events.registerObserver(ITimeService::TSEvents::AlarmActive, std::bind(&LightScheduler::NotificationHandler, &lightScheduler, _1));
+//        timeServiceStub.events.registerObserver(ITimeService::TSEvents::Error, std::bind(&LightScheduler::NotificationHandler, &lightScheduler, _1));
     }
 
     virtual void SetUp()
@@ -181,6 +182,8 @@ TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
     setTimeTo(Monday, 1200);
 
     timeServiceStub.events.notify(ITimeService::TSEvents::AlarmActive);
+//    timeServiceStub.events.notify(ITimeService::TSEvents::Error);
+    EXPECT_ANY_THROW(timeServiceStub.events.notify(ITimeService::TSEvents::Error));
 
     checkLightState(3, LightStateOn);
 }

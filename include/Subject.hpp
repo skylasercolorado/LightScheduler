@@ -26,9 +26,21 @@ namespace Camax
             observers_[std::move(event)].push_back(std::forward<Observer>(observer));
         }
 
-        void notify(const Event &event) const {
+        void notify(const Event &event) const
+        {
 //            for (const auto &obs : observers_.at(event)) obs();
-            for (const auto &obs : observers_.at(event)) obs(event);
+            try
+            {
+                for (const auto &obs : observers_.at(event)) obs(event);
+            }
+            catch (const std::out_of_range &ex)
+            {
+                std::cout << "\n\nNo observer is registered for this event\n";
+                std::cout << "Exception message: " << ex.what() << "\n\n";
+                throw ex;
+//                throw std::out_of_range("out of range");
+            }
+
         }
 
     private:
