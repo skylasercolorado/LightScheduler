@@ -19,7 +19,6 @@ class LightSchedulerTest : public ::testing::Test
 
     LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
     {
-//        timeServiceStub.events.registerObserver(ITimeService::TimeServiceEvents::AlarmActive, std::bind(&LightScheduler::NotificationHandler, &lightScheduler, _1));
         lightScheduler.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive);
     }
 
@@ -181,10 +180,9 @@ TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
     lightScheduler.ScheduleTurnOn(3, Monday, 1200);
     setTimeTo(Monday, 1200);
 
-//    timeServiceStub.events.notify(ITimeService::TimeServiceEvents::AlarmActive);
     timeServiceStub.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
     // No observer is registered for the Error event, so the Subject will thrown an exception because of that.
-//    EXPECT_ANY_THROW(timeServiceStub.events.notify(ITimeService::TimeServiceEvents::Error));
     EXPECT_ANY_THROW(timeServiceStub.NotifyObservers(ITimeService::TimeServiceEvents::Error));
 
     checkLightState(3, LightStateOn);
