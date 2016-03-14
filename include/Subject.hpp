@@ -17,18 +17,19 @@ namespace Camax
     public:
 
         template<typename Observer>
-        void registerObserver(const Event &event, Observer &&observer) {
+        void registerObserver(const Event &event, Observer &&observer)
+        {
             observers_[event].push_back(std::forward<Observer>(observer));
         }
 
         template<typename Observer>
-        void registerObserver(Event &&event, Observer &&observer) {
+        void registerObserver(Event &&event, Observer &&observer)
+        {
             observers_[std::move(event)].push_back(std::forward<Observer>(observer));
         }
 
         void notify(const Event &event) const
         {
-//            for (const auto &obs : observers_.at(event)) obs();
             try
             {
                 for (const auto &obs : observers_.at(event)) obs(event);
@@ -38,13 +39,11 @@ namespace Camax
                 std::cout << "\n\nNo observer is registered for this event\n";
                 std::cout << "Exception message: " << ex.what() << "\n\n";
                 throw ex;
-//                throw std::out_of_range("out of range");
             }
 
         }
 
     private:
-        //std::map<Event, std::vector<std::function<void()>>> observers_;
         std::map<Event, std::vector<std::function<void(Event)>>> observers_;
     };
 }
