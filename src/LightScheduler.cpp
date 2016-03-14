@@ -67,7 +67,7 @@ void LightScheduler::NotificationHandler(ITimeService::TSEvents event)
 
         case ITimeService::TSEvents::Error:
         default:
-            cout << "\nNotification Handler, Lightscheduler, error\n";
+            cout << "\nLightscheduler Notification Handler: Error event.\n";
             break;
     }
 }

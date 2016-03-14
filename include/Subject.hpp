@@ -40,7 +40,6 @@ namespace Camax
                 std::cout << "Exception message: " << ex.what() << "\n\n";
                 throw ex;
             }
-
         }
 
     private:
