@@ -27,11 +27,13 @@ namespace Camax
         }
 
         void notify(const Event &event) const {
-            for (const auto &obs : observers_.at(event)) obs();
+//            for (const auto &obs : observers_.at(event)) obs();
+            for (const auto &obs : observers_.at(event)) obs(event);
         }
 
     private:
-        std::map<Event, std::vector<std::function<void()>>> observers_;
+        //std::map<Event, std::vector<std::function<void()>>> observers_;
+        std::map<Event, std::vector<std::function<void(Event)>>> observers_;
     };
 }
 #endif //HELLOCLION_SUBJECT_HPP

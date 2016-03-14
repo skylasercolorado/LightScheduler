@@ -57,3 +57,17 @@ void LightScheduler::WakeUp()
     }
 }
 
+void LightScheduler::NotificationHandler(ITimeService::TSEvents event)
+{
+    switch(event)
+    {
+        case ITimeService::TSEvents::AlarmActive:
+            this->WakeUp();
+            break;
+
+        case ITimeService::TSEvents::Error:
+        default:
+            cout << "\nNotification Handler, Lightscheduler, error\n";
+            break;
+    }
+}
