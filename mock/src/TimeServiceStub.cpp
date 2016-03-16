@@ -5,38 +5,38 @@
 using namespace Camax;
 using namespace std;
 
-LightSchedulerTime TimeServiceStub::time = {Unknown, Unknown};
-int TimeServiceStub::periodInSeconds = 0;
+LightSchedulerTime TimeServiceStub::time_ = {Unknown, Unknown};
+int TimeServiceStub::periodInSeconds_ = 0;
 
-void TimeServiceStub::reset()
+void TimeServiceStub::Reset()
 {
-    time.minuteOfDay = Unknown;
-    time.dayOfWeek = Unknown;
+    time_.minuteOfDay = Unknown;
+    time_.dayOfWeek = Unknown;
 }
 
 LightSchedulerTime & TimeServiceStub::GetTime()
 {
-    return time;
+    return time_;
 }
 
 void TimeServiceStub::SetPeriodicAlarm(int periodInSeconds)
 {
-    this->periodInSeconds = periodInSeconds;
+    this->periodInSeconds_ = periodInSeconds;
 }
 
-void TimeServiceStub::setMinute(int minute)
+void TimeServiceStub::SetMinute(int minute)
 {
     ValidateMinute(minute);
-    time.minuteOfDay = minute;
+    time_.minuteOfDay = minute;
 }
 
-void TimeServiceStub::setDay(int day)
+void TimeServiceStub::SetDay(int day)
 {
     ValidateDay((Monday));
-    time.dayOfWeek = day;
+    time_.dayOfWeek = day;
 }
 
-int TimeServiceStub::getAlarmPeriod()
+int TimeServiceStub::GetAlarmPeriod()
 {
-    return periodInSeconds;
+    return periodInSeconds_;
 }

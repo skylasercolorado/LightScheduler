@@ -17,15 +17,15 @@ class LightSchedulerTest : public ::testing::Test
     const int AlarmPeriod = 60;
 
 
-    LightSchedulerTest() : lightScheduler(timeServiceStub, lightControllerStub)
+    LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_)
     {
-        lightScheduler.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive);
+        lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive);
     }
 
     virtual void SetUp()
     {
-        LightControllerStub::reset();
-        TimeServiceStub::reset();
+        LightControllerStub::Reset();
+        TimeServiceStub::Reset();
     }
 
     virtual void TearDown()
@@ -33,164 +33,165 @@ class LightSchedulerTest : public ::testing::Test
 
     }
 
-    LightScheduler lightScheduler;
-    LightControllerStub lightControllerStub;
-    TimeServiceStub timeServiceStub;
-    void setTimeTo(Day day, int minute);
-    void checkLightState(int id, LightStatus lightStatus);
+    void SetTimeTo(Day day, int minute);
+    void CheckLightState(int id, LightStatus lightStatus);
+
+    LightScheduler lightScheduler_;
+    LightControllerStub lightControllerStub_;
+    TimeServiceStub timeServiceStub_;
 };
 
-void LightSchedulerTest::setTimeTo(Day day, int minute)
+void LightSchedulerTest::SetTimeTo(Day day, int minute)
 {
-    timeServiceStub.setDay(day);
-    timeServiceStub.setMinute(minute);
+    timeServiceStub_.SetDay(day);
+    timeServiceStub_.SetMinute(minute);
 }
 
-void LightSchedulerTest::checkLightState(int id, LightStatus lightStatus)
+void LightSchedulerTest::CheckLightState(int id, LightStatus lightStatus)
 {
-    EXPECT_EQ(id, lightControllerStub.getLastId());
-    EXPECT_EQ(lightStatus, lightControllerStub.getLastState());
+    EXPECT_EQ(id, lightControllerStub_.GetLastId());
+    EXPECT_EQ(lightStatus, lightControllerStub_.GetLastState());
 }
 
-// Testing the light controller stub after reset
+// Testing the light controller stub after Reset
 TEST_F(LightSchedulerTest, NoChangeToLightsDuringInitialization)
 {
-    EXPECT_EQ(LightIdUnknown, lightControllerStub.getLastId());
-    EXPECT_EQ(LightStateUnknown, lightControllerStub.getLastState());
+    EXPECT_EQ(LightIdUnknown, lightControllerStub_.GetLastId());
+    EXPECT_EQ(LightStateUnknown, lightControllerStub_.GetLastState());
 }
 
-// Testing the time service stub after reset
+// Testing the time_ service stub after Reset
 TEST_F(LightSchedulerTest, Create)
 {
-    EXPECT_EQ(Unknown, timeServiceStub.GetTime().minuteOfDay);
-    EXPECT_EQ(Unknown, timeServiceStub.GetTime().dayOfWeek);
+    EXPECT_EQ(Unknown, timeServiceStub_.GetTime().minuteOfDay);
+    EXPECT_EQ(Unknown, timeServiceStub_.GetTime().dayOfWeek);
 }
 
-// Testing get/set of time service stub
+// Testing get/set of time_ service stub
 TEST_F(LightSchedulerTest, Set)
 {
-    timeServiceStub.setMinute(42);
-    timeServiceStub.setDay(Saturday);
+    timeServiceStub_.SetMinute(42);
+    timeServiceStub_.SetDay(Saturday);
 
-    EXPECT_EQ(42, timeServiceStub.GetTime().minuteOfDay);
-    EXPECT_EQ(Saturday, timeServiceStub.GetTime().dayOfWeek);
+    EXPECT_EQ(42, timeServiceStub_.GetTime().minuteOfDay);
+    EXPECT_EQ(Saturday, timeServiceStub_.GetTime().dayOfWeek);
 }
 
 TEST_F(LightSchedulerTest, ScheduleOnEverydayNotTimeYet)
 {
-    lightScheduler.ScheduleTurnOn(3, Everyday, 1200);
-    setTimeTo(Monday, 1199);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Everyday, 1200);
+    SetTimeTo(Monday, 1199);
+    lightScheduler_.WakeUp();
 
-    checkLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(LightIdUnknown, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleOnEverydayItsTime)
 {
-    lightScheduler.ScheduleTurnOn(3, Everyday, 1200);
-    setTimeTo(Monday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Everyday, 1200);
+    SetTimeTo(Monday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(3, LightStateOn);
+    CheckLightState(3, LightStateOn);
 }
 
 TEST_F(LightSchedulerTest, ScheduleOffEverydayItsTime)
 {
-    lightScheduler.ScheduleTurnOff(3, Everyday, 1200);
-    setTimeTo(Monday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOff(3, Everyday, 1200);
+    SetTimeTo(Monday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(3, LightStateOff);
+    CheckLightState(3, LightStateOff);
 }
 
 
 TEST_F(LightSchedulerTest, NoScheduleNothingHappens)
 {
-    setTimeTo(Monday, 100);
-    lightScheduler.WakeUp();
+    SetTimeTo(Monday, 100);
+    lightScheduler_.WakeUp();
 
-    checkLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(LightIdUnknown, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleTuesdayButItsMonday)
 {
-    lightScheduler.ScheduleTurnOn(3, Tuesday, 1200);
-    setTimeTo(Monday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Tuesday, 1200);
+    SetTimeTo(Monday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(LightIdUnknown, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleTuesdayAndItsTuesday)
 {
-    lightScheduler.ScheduleTurnOn(3, Tuesday, 1200);
-    setTimeTo(Tuesday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Tuesday, 1200);
+    SetTimeTo(Tuesday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(3, LightStateOn);
+    CheckLightState(3, LightStateOn);
 }
 
 TEST_F(LightSchedulerTest, ScheduleWeekEndItsFriday)
 {
-    lightScheduler.ScheduleTurnOn(3, Weekend, 1200);
-    setTimeTo(Friday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Weekend, 1200);
+    SetTimeTo(Friday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(LightIdUnknown, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleWeekEndItsSaturday)
 {
-    lightScheduler.ScheduleTurnOn(3, Weekend, 1200);
-    setTimeTo(Saturday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Weekend, 1200);
+    SetTimeTo(Saturday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(3, LightStateOn);
+    CheckLightState(3, LightStateOn);
 }
 
 TEST_F(LightSchedulerTest, ScheduleWeekEndItsMonday)
 {
-    lightScheduler.ScheduleTurnOn(3, Weekend, 1200);
-    setTimeTo(Monday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Weekend, 1200);
+    SetTimeTo(Monday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(LightIdUnknown, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleWeekdayItsMonday)
 {
-    lightScheduler.ScheduleTurnOn(3, Weekday, 1200);
-    setTimeTo(Monday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Weekday, 1200);
+    SetTimeTo(Monday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(3, LightStateOn);
+    CheckLightState(3, LightStateOn);
 }
 
 TEST_F(LightSchedulerTest, ScheduleWeekdayItsSaturday)
 {
-    lightScheduler.ScheduleTurnOn(3, Weekday, 1200);
-    setTimeTo(Saturday, 1200);
-    lightScheduler.WakeUp();
+    lightScheduler_.ScheduleTurnOn(3, Weekday, 1200);
+    SetTimeTo(Saturday, 1200);
+    lightScheduler_.WakeUp();
 
-    checkLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(LightIdUnknown, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
 {
-    lightScheduler.ScheduleTurnOn(3, Monday, 1200);
-    setTimeTo(Monday, 1200);
+    lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
+    SetTimeTo(Monday, 1200);
 
-    timeServiceStub.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
 
     // No observer is registered for the Error event, so the Subject will thrown an exception because of that.
-    EXPECT_ANY_THROW(timeServiceStub.NotifyObservers(ITimeService::TimeServiceEvents::Error));
+    EXPECT_ANY_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error));
 
-    checkLightState(3, LightStateOn);
+    CheckLightState(3, LightStateOn);
 }
 
 TEST_F(LightSchedulerTest, SetAndGetAlaramPeriod)
 {
-    timeServiceStub.SetPeriodicAlarm(23);
+    timeServiceStub_.SetPeriodicAlarm(23);
 
-    EXPECT_EQ(23, timeServiceStub.getAlarmPeriod());
+    EXPECT_EQ(23, timeServiceStub_.GetAlarmPeriod());
 }

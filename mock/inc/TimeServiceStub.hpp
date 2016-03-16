@@ -11,14 +11,14 @@ namespace Camax
         virtual LightSchedulerTime &GetTime();
         virtual void SetPeriodicAlarm(int periodInSeconds);
         // The actual mock starts from hereon forward
-        static void setMinute(int minute);
-        static void setDay(int day);
-        static void reset();
-        static int getAlarmPeriod();
+        static void SetMinute(int minute);
+        static void SetDay(int day);
+        static void Reset();
+        static int GetAlarmPeriod();
 
     private:
-        static LightSchedulerTime time;
-        static int periodInSeconds;
+        static LightSchedulerTime time_;
+        static int periodInSeconds_;
     };
 }
 

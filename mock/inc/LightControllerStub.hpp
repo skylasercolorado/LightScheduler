@@ -11,13 +11,13 @@ namespace Camax
         void TurnOn(int id);
         void TurnOff(int id);
         // The actual mock starts from hereon forward
-        static int getLastId();
-        static int getLastState();
-        static void reset();
+        static int GetLastId();
+        static int GetLastState();
+        static void Reset();
 
     private:
-        static int lastId;
-        static int lastState;
+        static int lastId_;
+        static int lastState_;
     };
 }
 
