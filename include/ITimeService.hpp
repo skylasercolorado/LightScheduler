@@ -22,7 +22,7 @@ namespace Camax
         Unknown = -1 // Marker of last element in enumeration
     };
 
-    struct Time
+    struct LightSchedulerTime
     {
         int minuteOfDay;
         int dayOfWeek;
@@ -33,16 +33,16 @@ namespace Camax
     public:
         enum class TimeServiceEvents { AlarmActive, Error};
 
-        virtual Time& getTime() = 0;
-        virtual void setPeriodicAlarm(int periodInSeconds) = 0;
-        static void validateMinute(int minute);
-        static void validateDay(Day day);
-        static void validateDayMinute(int day, int minute);
-        void RegisterEventObserver(TimeServiceEvents event, std::function<void(TimeServiceEvents)> fn);
+        virtual LightSchedulerTime& GetTime() = 0;
+        virtual void SetPeriodicAlarm(int periodInSeconds) = 0;
+        static void ValidateMinute(int minute);
+        static void ValidateDay(Day day);
+        static void ValidateDayMinute(int day, int minute);
+        void RegisterObserver(TimeServiceEvents event, std::function<void(TimeServiceEvents)> fn);
         void NotifyObservers(TimeServiceEvents event);
 
     private:
-        Subject<TimeServiceEvents> events;
+        Subject<TimeServiceEvents> events_;
     };
 }
 

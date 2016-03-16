@@ -8,8 +8,8 @@ namespace Camax
     class LightControllerStub : public ILightController
     {
     public:
-        void turnOn(int id);
-        void turnOff(int id);
+        void TurnOn(int id);
+        void TurnOff(int id);
         // The actual mock starts from hereon forward
         static int getLastId();
         static int getLastState();

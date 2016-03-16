@@ -62,8 +62,8 @@ TEST_F(LightSchedulerTest, NoChangeToLightsDuringInitialization)
 // Testing the time service stub after reset
 TEST_F(LightSchedulerTest, Create)
 {
-    EXPECT_EQ(Unknown, timeServiceStub.getTime().minuteOfDay);
-    EXPECT_EQ(Unknown, timeServiceStub.getTime().dayOfWeek);
+    EXPECT_EQ(Unknown, timeServiceStub.GetTime().minuteOfDay);
+    EXPECT_EQ(Unknown, timeServiceStub.GetTime().dayOfWeek);
 }
 
 // Testing get/set of time service stub
@@ -72,8 +72,8 @@ TEST_F(LightSchedulerTest, Set)
     timeServiceStub.setMinute(42);
     timeServiceStub.setDay(Saturday);
 
-    EXPECT_EQ(42, timeServiceStub.getTime().minuteOfDay);
-    EXPECT_EQ(Saturday, timeServiceStub.getTime().dayOfWeek);
+    EXPECT_EQ(42, timeServiceStub.GetTime().minuteOfDay);
+    EXPECT_EQ(Saturday, timeServiceStub.GetTime().dayOfWeek);
 }
 
 TEST_F(LightSchedulerTest, ScheduleOnEverydayNotTimeYet)
@@ -190,7 +190,7 @@ TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
 
 TEST_F(LightSchedulerTest, SetAndGetAlaramPeriod)
 {
-    timeServiceStub.setPeriodicAlarm(23);
+    timeServiceStub.SetPeriodicAlarm(23);
 
     EXPECT_EQ(23, timeServiceStub.getAlarmPeriod());
 }

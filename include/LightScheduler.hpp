@@ -11,20 +11,20 @@ namespace Camax
 {
     struct ScheduledLightEvent
     {
-        int id;
-        Day day;
-        int minuteOfDay;
-        LightStatus lightStatus;
+        int id_;
+        Day day_;
+        int minuteOfDay_;
+        LightStatus lightStatus_;
     
-        ScheduledLightEvent(int _id, Day _day, int _minuteOfDay, LightStatus _lightStatus) :
-                id(_id), day(_day), minuteOfDay(_minuteOfDay), lightStatus(_lightStatus)  {}
+        ScheduledLightEvent(int id, Day day, int minuteOfDay, LightStatus lightStatus) :
+                id_(id), day_(day), minuteOfDay_(minuteOfDay), lightStatus_(lightStatus)  {}
     };
   
     class LightScheduler
     {
     public:
         LightScheduler(ITimeService &_timeService, ILightController &_lightController) :
-            timeService(_timeService), lightController(_lightController) {}
+                timeService_(_timeService), lightController_(_lightController) {}
         void ScheduleTurnOn(int id, Day day, int minute);
         void ScheduleTurnOff(int id, Day day, int minute);
         void RemoveSchedule();
@@ -33,9 +33,9 @@ namespace Camax
         void RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event);
     
     private:
-        vector<ScheduledLightEvent> scheduledLightEvents;
-        ITimeService &timeService;
-        ILightController &lightController;
+        vector<ScheduledLightEvent> scheduledLightEvents_;
+        ITimeService &timeService_;
+        ILightController &lightController_;
     };
 }
 

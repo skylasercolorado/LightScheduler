@@ -17,18 +17,18 @@ namespace Camax
     public:
 
         template<typename Observer>
-        void registerObserver(const Event &event, Observer &&observer)
+        void RegisterObserver(const Event &event, Observer &&observer)
         {
             observers_[event].push_back(std::forward<Observer>(observer));
         }
 
         template<typename Observer>
-        void registerObserver(Event &&event, Observer &&observer)
+        void RegisterObserver(Event &&event, Observer &&observer)
         {
             observers_[std::move(event)].push_back(std::forward<Observer>(observer));
         }
 
-        void notify(const Event &event) const
+        void Notify(const Event &event) const
         {
             try
             {

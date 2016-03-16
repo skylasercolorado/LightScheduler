@@ -5,7 +5,7 @@
 using namespace Camax;
 using namespace std;
 
-Time TimeServiceStub::time = {Unknown, Unknown};
+LightSchedulerTime TimeServiceStub::time = {Unknown, Unknown};
 int TimeServiceStub::periodInSeconds = 0;
 
 void TimeServiceStub::reset()
@@ -14,25 +14,25 @@ void TimeServiceStub::reset()
     time.dayOfWeek = Unknown;
 }
 
-Time& TimeServiceStub::getTime()
+LightSchedulerTime & TimeServiceStub::GetTime()
 {
     return time;
 }
 
-void TimeServiceStub::setPeriodicAlarm(int periodInSeconds)
+void TimeServiceStub::SetPeriodicAlarm(int periodInSeconds)
 {
     this->periodInSeconds = periodInSeconds;
 }
 
 void TimeServiceStub::setMinute(int minute)
 {
-    validateMinute(minute);
+    ValidateMinute(minute);
     time.minuteOfDay = minute;
 }
 
 void TimeServiceStub::setDay(int day)
 {
-    validateDay((Monday));
+    ValidateDay((Monday));
     time.dayOfWeek = day;
 }
 

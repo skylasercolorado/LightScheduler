@@ -11,13 +11,13 @@ void LightControllerStub::reset()
     lastState = LightStateUnknown;
 }
 
-void LightControllerStub::turnOn(int id)
+void LightControllerStub::TurnOn(int id)
 {
     lastId = id;
     lastState = LightStateOn;
 }
 
-void LightControllerStub::turnOff(int id)
+void LightControllerStub::TurnOff(int id)
 {
     lastId = id;
     lastState = LightStateOff;
