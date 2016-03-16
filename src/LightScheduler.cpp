@@ -37,7 +37,7 @@ void LightScheduler::WakeUp()
     }
 }
 
-void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator event)
+void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator &event)
 {
     switch (event->lightStatus_)
     {
@@ -54,7 +54,7 @@ void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator e
     }
 }
 
-bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator event)
+bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event)
 {
     int today = timeService_.GetTime().dayOfWeek;
     int thisMinute = timeService_.GetTime().minuteOfDay;
