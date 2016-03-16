@@ -32,33 +32,12 @@ void LightScheduler::WakeUp()
     for(vector<ScheduledLightEvent>::iterator it = scheduledLightEvents_.begin();
         it != scheduledLightEvents_.end(); it++)
     {
-        int today = timeService_.GetTime().dayOfWeek;
-        int thisMinute = timeService_.GetTime().minuteOfDay;
-
-        if((it->day_ == today ||
-            it->day_ == Everyday ||
-            (it->day_ == Weekend && (today == Saturday || today == Sunday )) ||
-            (it->day_ == Weekday && (today >= Monday && today <= Friday ))
-           ) && it->minuteOfDay_ == thisMinute)
-        {
-            switch (it->lightStatus_)
-            {
-                case LightStateOn:
-                    lightController_.TurnOn(it->id_);
-                    break;
-	      
-                case LightStateOff:
-                    lightController_.TurnOff(it->id_);
-                    break;
-	      
-                default:
-                    break;
-            }
-        }
+        if(doesLightOperateNow(it))
+            operateLight(it);
     }
 }
 
-void LightScheduler::operateLight(ScheduledLightEvent *event)
+void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator event)
 {
     switch (event->lightStatus_)
     {
@@ -75,7 +54,7 @@ void LightScheduler::operateLight(ScheduledLightEvent *event)
     }
 }
 
-bool LightScheduler::doesLightOperateNow(ScheduledLightEvent *event)
+bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator event)
 {
     int today = timeService_.GetTime().dayOfWeek;
     int thisMinute = timeService_.GetTime().minuteOfDay;
