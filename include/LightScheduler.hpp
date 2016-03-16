@@ -36,6 +36,8 @@ namespace Camax
         vector<ScheduledLightEvent> scheduledLightEvents_;
         ITimeService &timeService_;
         ILightController &lightController_;
+        bool doesLightOperateNow(ScheduledLightEvent *event);
+        void operateLight(ScheduledLightEvent *event);
     };
 }
 

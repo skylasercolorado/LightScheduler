@@ -58,6 +58,35 @@ void LightScheduler::WakeUp()
     }
 }
 
+void LightScheduler::operateLight(ScheduledLightEvent *event)
+{
+    switch (event->lightStatus_)
+    {
+        case LightStateOn:
+            lightController_.TurnOn(event->id_);
+            break;
+
+        case LightStateOff:
+            lightController_.TurnOff(event->id_);
+            break;
+
+        default:
+            break;
+    }
+}
+
+bool LightScheduler::doesLightOperateNow(ScheduledLightEvent *event)
+{
+    int today = timeService_.GetTime().dayOfWeek;
+    int thisMinute = timeService_.GetTime().minuteOfDay;
+
+    return (event->day_ == today ||
+            event->day_ == Everyday ||
+            (event->day_ == Weekend && (today == Saturday || today == Sunday )) ||
+            (event->day_ == Weekday && (today >= Monday && today <= Friday ))
+           ) && event->minuteOfDay_ == thisMinute ? true : false;
+}
+
 void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
 {
     switch(event)
