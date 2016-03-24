@@ -36,8 +36,10 @@ namespace Camax
             }
             catch (const std::out_of_range &ex)
             {
+#ifdef DEBUG
                 std::cout << "\n\nNo observer is registered for this event\n";
                 std::cout << "Exception message: " << ex.what() << "\n\n";
+#endif // DEBUG
                 throw ex;
             }
         }
