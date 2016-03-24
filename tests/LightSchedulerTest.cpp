@@ -191,7 +191,7 @@ TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
 
 TEST_F(LightSchedulerTest, SetAndGetAlaramPeriod)
 {
-    timeServiceStub_.SetPeriodicAlarm(23);
+    timeServiceStub_.SetAlarmPeriod(23);
 
     EXPECT_EQ(23, timeServiceStub_.GetAlarmPeriod());
 }
