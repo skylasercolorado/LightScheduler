@@ -40,3 +40,8 @@ void ITimeService::NotifyObservers(TimeServiceEvents event)
     events_.Notify(event);
 }
 
+//bool ITimeService::FindObserver(TimeServiceEvents event, std::function<void(ITimeService::TimeServiceEvents)> fn)
+bool ITimeService::FindObserver(TimeServiceEvents event)
+{
+    return events_.Find(event);
+}

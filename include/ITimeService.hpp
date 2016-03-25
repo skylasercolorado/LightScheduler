@@ -39,6 +39,8 @@ namespace Camax
         static void ValidateDay(Day day);
         static void ValidateDayMinute(int day, int minute);
         void RegisterObserver(TimeServiceEvents event, std::function<void(TimeServiceEvents)> fn);
+//        bool FindObserver(TimeServiceEvents event, std::function<void(TimeServiceEvents)> fn);
+        bool FindObserver(TimeServiceEvents event);
         void NotifyObservers(TimeServiceEvents event);
 
     private:

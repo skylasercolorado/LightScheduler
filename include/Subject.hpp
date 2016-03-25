@@ -44,10 +44,12 @@ namespace Camax
             }
         }
 
-        template<typename Observer>
-        bool Find(const Observer &&observer)
+//        template<typename Observer>
+//        bool Find(Observer &&observer)
+        bool Find(const Event &event)
         {
-            return (observers_.count(std::forward<Observer>(observer)) ? true : false);
+//            return (observers_.count(std::forward<Observer>(observer)) ? true : false);
+            return (observers_.count(event) ? true : false);
         }
 
 
