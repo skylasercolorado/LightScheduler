@@ -19,7 +19,7 @@ class LightSchedulerTest : public ::testing::Test
 
     LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_)
     {
-        lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive);
+        lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive, AlarmPeriod);
     }
 
     virtual void SetUp()
@@ -187,6 +187,7 @@ TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
     EXPECT_ANY_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error));
 
     CheckLightState(3, LightStateOn);
+    EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
 }
 
 TEST_F(LightSchedulerTest, SetAndGetAlaramPeriod)

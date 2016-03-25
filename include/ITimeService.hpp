@@ -34,7 +34,7 @@ namespace Camax
         enum class TimeServiceEvents { AlarmActive, Error};
 
         virtual LightSchedulerTime& GetTime() = 0;
-        virtual void SetAlarmPeriod(int periodInSeconds) = 0;
+        virtual void SetAlarmPeriod(uint periodInSeconds) = 0;
         static void ValidateMinute(int minute);
         static void ValidateDay(Day day);
         static void ValidateDayMinute(int day, int minute);

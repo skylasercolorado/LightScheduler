@@ -19,7 +19,7 @@ LightSchedulerTime & TimeServiceStub::GetTime()
     return time_;
 }
 
-void TimeServiceStub::SetAlarmPeriod(int periodInSeconds)
+void TimeServiceStub::SetAlarmPeriod(uint periodInSeconds)
 {
     this->periodInSeconds_ = periodInSeconds;
 }
