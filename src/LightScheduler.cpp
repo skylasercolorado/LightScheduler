@@ -81,6 +81,6 @@ void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
 
 void LightScheduler::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event, uint alarmPeriod)
 {
-    timeService_.RegisterObserver(event, std::bind(&LightScheduler::NotificationHandler, this, _1));
+    timeService_.RegisterObserver(event, notificationHandler);
     timeService_.SetAlarmPeriod(alarmPeriod);
 }

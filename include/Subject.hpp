@@ -47,13 +47,9 @@ namespace Camax
         template<typename Observer>
         bool Find(const Observer &&observer)
         {
-            if(observers_.count(std::forward<Observer>(observer)))
-                return true;
-            else
-                return false;
-
-//            return (observers_.count(std::forward<Observer>(observer)) : true ? false);
+            return (observers_.count(std::forward<Observer>(observer)) ? true : false);
         }
+
 
     private:
         std::map<Event, std::vector<std::function<void(Event)>>> observers_;
