@@ -81,12 +81,8 @@ namespace Camax
             return false;
         }
 
-//        template<typename Observer>
-//        bool Find(Observer &&observer)
         bool FindObserver(ObserverHandle<Event> &handle)
         {
-//            return (observers_.count(std::forward<Observer>(observer)) ? true : false);
-//            return (observers_.count(event) ? true : false);
             auto it = observers_.find(handle.event);
 
             if(it != observers_.end())
@@ -104,7 +100,6 @@ namespace Camax
 
             return false;
         }
-
 
     private:
         std::map<Event, std::vector<EventHandler>> observers_;
