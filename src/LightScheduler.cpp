@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <stdexcept>
+#include <system_error>
 
 using namespace Camax;
 using namespace std;
@@ -75,12 +76,14 @@ void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
             break;
 
         case ITimeService::TimeServiceEvents::Error:
+//            throw std::system_error(ETIMEDOUT, std::system_category());
+            throw std::runtime_error("Generic time service error");
             break;
     }
 }
 
 void LightScheduler::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event, uint alarmPeriod)
 {
-    timeService_.RegisterObserver(event, notificationHandler);
+    timeService_.RegisterObserver(event, notificationHandler_);
     timeService_.SetAlarmPeriod(alarmPeriod);
 }

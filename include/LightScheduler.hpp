@@ -27,7 +27,7 @@ namespace Camax
         LightScheduler(ITimeService &_timeService, ILightController &_lightController) :
                 timeService_(_timeService), lightController_(_lightController)
         {
-            notificationHandler = std::bind(&LightScheduler::NotificationHandler, this, _1);
+            notificationHandler_ = std::bind(&LightScheduler::NotificationHandler, this, _1);
         }
         void ScheduleTurnOn(int id, Day day, int minute);
         void ScheduleTurnOff(int id, Day day, int minute);
@@ -42,8 +42,7 @@ namespace Camax
         ILightController &lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
-//        std::function<void(ITimeService::TimeServiceEvents)> notificationHandler;
-        Subject<ITimeService::TimeServiceEvents>::EventHandler notificationHandler;
+        Subject<ITimeService::TimeServiceEvents>::EventHandler notificationHandler_;
     };
 }
 
