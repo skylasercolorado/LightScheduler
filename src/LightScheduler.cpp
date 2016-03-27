@@ -76,7 +76,6 @@ void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
             break;
 
         case ITimeService::TimeServiceEvents::Error:
-//            throw std::system_error(ETIMEDOUT, std::system_category());
             throw std::runtime_error("Generic time service error");
             break;
     }

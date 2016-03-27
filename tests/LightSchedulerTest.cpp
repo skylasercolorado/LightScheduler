@@ -185,14 +185,11 @@ TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
     timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
 
     // No observer is registered for the Error event, so the Subject will thrown an exception because of that.
-//    EXPECT_ANY_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error));
-//    EXPECT_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error), std::out_of_range);
+    EXPECT_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error), std::out_of_range);
 
+    // Register for the 'error' event and test the correct exception is thrown
     lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::Error, AlarmPeriod);
-
-//    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error);
     EXPECT_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error), std::runtime_error);
-//    EXPECT_ANY_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error));
 
     CheckLightState(3, LightStateOn);
     EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());

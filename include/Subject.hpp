@@ -32,13 +32,13 @@ namespace Camax
 
         void Notify(const Event &event) const
         {
+            //TODO: Who should throw/rethrow or handle the exceptions? Originator or caller?
             try
             {
                 for (const auto &obs : observers_.at(event)) obs(event);
             }
             catch (const std::out_of_range &ex)
             {
-#define DEBUG
 #ifdef DEBUG
                 std::cout << "\n\nNo observer is registered for this event\n";
                 std::cout << "Exception message: " << ex.what() << "\n\n";
