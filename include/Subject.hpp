@@ -12,6 +12,13 @@
 
 namespace Camax
 {
+    template <typename Event>
+    struct ObserverHandle
+    {
+        Event event;
+        unsigned int vectorIndex;
+    };
+
     template<typename Event>
     class Subject {
     public:
@@ -19,15 +26,21 @@ namespace Camax
         typedef std::function<void(Event)> EventHandler;
 
         template<typename Observer>
-        void RegisterObserver(const Event &event, Observer &&observer)
+        const ObserverHandle<Event> RegisterObserver(const Event &event, Observer &&observer)
         {
             observers_[event].push_back(std::forward<Observer>(observer));
+
+            ObserverHandle<Event> handle{event, (unsigned int) (observers_[event].size() - 1)};
+            return handle;
         }
 
         template<typename Observer>
-        void RegisterObserver(Event &&event, Observer &&observer)
+        const ObserverHandle <Event> RegisterObserver(Event &&event, Observer &&observer)
         {
             observers_[std::move(event)].push_back(std::forward<Observer>(observer));
+
+            ObserverHandle<Event> handle{event, (unsigned int) (observers_[event].size() - 1)};
+            return handle;
         }
 
         void Notify(const Event &event) const
@@ -45,6 +58,27 @@ namespace Camax
 #endif // DEBUG
                 throw ex;
             }
+        }
+
+        bool UnregisterObserver(ObserverHandle<Event> &handle)
+        {
+            auto it = observers_.find(handle.event);
+
+            if(it != observers_.end())
+            {
+                // Get the vector associated with the event
+                auto eventVector = observers_[handle.event];
+                // Get iterator to observer to remove
+                auto observerToRemove = eventVector.begin() + handle.vectorIndex;
+                // Remove the desired observer
+                eventVector.erase(observerToRemove);
+                // Re associated the modified event vector to the observers map
+                observers_[handle.event] = eventVector;
+
+                return true;
+            }
+
+            return false;
         }
 
 //        template<typename Observer>
