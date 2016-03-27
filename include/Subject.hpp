@@ -83,10 +83,26 @@ namespace Camax
 
 //        template<typename Observer>
 //        bool Find(Observer &&observer)
-        bool Find(const Event &event)
+        bool FindObserver(ObserverHandle<Event> &handle)
         {
 //            return (observers_.count(std::forward<Observer>(observer)) ? true : false);
-            return (observers_.count(event) ? true : false);
+//            return (observers_.count(event) ? true : false);
+            auto it = observers_.find(handle.event);
+
+            if(it != observers_.end())
+            {
+                // Get the vector associated with the event
+                auto eventVector = observers_[handle.event];
+                if(eventVector.size() > handle.vectorIndex)
+                {
+                    // Get iterator to observer to remove
+                    auto observerToRemove = eventVector.begin() + handle.vectorIndex;
+                    if(observerToRemove != eventVector.end())
+                        return true;
+                }
+            }
+
+            return false;
         }
 
 

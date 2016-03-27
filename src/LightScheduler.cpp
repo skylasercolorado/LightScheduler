@@ -81,8 +81,19 @@ void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
     }
 }
 
-void LightScheduler::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event, uint alarmPeriod)
+ObserverHandle<ITimeService::TimeServiceEvents> LightScheduler::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event, uint alarmPeriod)
 {
-    timeService_.RegisterObserver(event, notificationHandler_);
     timeService_.SetAlarmPeriod(alarmPeriod);
+    return timeService_.RegisterObserver(event, notificationHandler_);
+}
+
+bool LightScheduler::UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle)
+{
+    if(timeService_.UnregisterObserver(handle))
+    {
+        timeService_.SetAlarmPeriod(0);
+        return true;
+    }
+
+    return false;
 }

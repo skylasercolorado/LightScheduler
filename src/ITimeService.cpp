@@ -30,9 +30,9 @@ void ITimeService::ValidateDayMinute(int day, int minute)
     ValidateMinute(minute);
 }
 
-void ITimeService::RegisterObserver(TimeServiceEvents event, std::function<void(ITimeService::TimeServiceEvents)> fn)
+ObserverHandle<ITimeService::TimeServiceEvents> ITimeService::RegisterObserver(TimeServiceEvents event, std::function<void(ITimeService::TimeServiceEvents)> fn)
 {
-    events_.RegisterObserver(event, fn);
+    return events_.RegisterObserver(event, fn);
 }
 
 void ITimeService::NotifyObservers(TimeServiceEvents event)
@@ -40,8 +40,13 @@ void ITimeService::NotifyObservers(TimeServiceEvents event)
     events_.Notify(event);
 }
 
-//bool ITimeService::FindObserver(TimeServiceEvents event, std::function<void(ITimeService::TimeServiceEvents)> fn)
-bool ITimeService::FindObserver(TimeServiceEvents event)
+bool ITimeService::UnregisterObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
 {
-    return events_.Find(event);
+    return events_.UnregisterObserver(handle);
+}
+
+//bool ITimeService::FindObserver(TimeServiceEvents event, std::function<void(ITimeService::TimeServiceEvents)> fn)
+bool ITimeService::FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
+{
+    return events_.FindObserver(handle);
 }

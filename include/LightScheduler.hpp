@@ -34,7 +34,7 @@ namespace Camax
         void RemoveSchedule();
         void WakeUp();
         void NotificationHandler(ITimeService::TimeServiceEvents event);
-        void RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event, uint alarmPeriod);
+        ObserverHandle<ITimeService::TimeServiceEvents> RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event, uint alarmPeriod);
     
     private:
         vector<ScheduledLightEvent> scheduledLightEvents_;
@@ -43,6 +43,8 @@ namespace Camax
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
         Subject<ITimeService::TimeServiceEvents>::EventHandler notificationHandler_;
+
+        bool UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle);
     };
 }
 
