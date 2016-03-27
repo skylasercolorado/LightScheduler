@@ -57,8 +57,6 @@ namespace Camax
 
 
     private:
-//        std::map<Event, std::vector<std::function<void(Event)>>> observers_;
-
         std::map<Event, std::vector<EventHandler>> observers_;
     };
 }
