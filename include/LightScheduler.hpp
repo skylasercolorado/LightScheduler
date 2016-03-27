@@ -42,7 +42,8 @@ namespace Camax
         ILightController &lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
-        std::function<void(ITimeService::TimeServiceEvents)> notificationHandler;
+//        std::function<void(ITimeService::TimeServiceEvents)> notificationHandler;
+        Subject<ITimeService::TimeServiceEvents>::EventHandler notificationHandler;
     };
 }
 

@@ -16,6 +16,8 @@ namespace Camax
     class Subject {
     public:
 
+        typedef std::function<void(Event)> EventHandler;
+
         template<typename Observer>
         void RegisterObserver(const Event &event, Observer &&observer)
         {
@@ -54,7 +56,9 @@ namespace Camax
 
 
     private:
-        std::map<Event, std::vector<std::function<void(Event)>>> observers_;
+//        std::map<Event, std::vector<std::function<void(Event)>>> observers_;
+
+        std::map<Event, std::vector<EventHandler>> observers_;
     };
 }
 #endif //HELLOCLION_SUBJECT_HPP
