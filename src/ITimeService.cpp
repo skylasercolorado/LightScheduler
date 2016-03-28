@@ -30,7 +30,8 @@ void ITimeService::ValidateDayMinute(int day, int minute)
     ValidateMinute(minute);
 }
 
-ObserverHandle<ITimeService::TimeServiceEvents> ITimeService::RegisterObserver(TimeServiceEvents event, std::function<void(ITimeService::TimeServiceEvents)> fn)
+ObserverHandle<ITimeService::TimeServiceEvents> ITimeService::RegisterObserver(TimeServiceEvents event,
+                                                                               Subject<ITimeService::TimeServiceEvents>::EventHandler fn)
 {
     return events_.RegisterObserver(event, fn);
 }
