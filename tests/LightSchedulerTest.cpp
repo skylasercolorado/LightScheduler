@@ -221,12 +221,12 @@ TEST_F(LightSchedulerTest, UnregisterForAlarmActive)
     lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
     SetTimeTo(Monday, 1200);
 
-    timeServiceStub_.UnregisterObserver(observerHandle_);
+    lightScheduler_.UnregisterForTimeServiceEvent(observerHandle_);
 
     timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
 
     CheckLightState(LightIdUnknown, LightStateUnknown);
-    EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
+    EXPECT_EQ(0, timeServiceStub_.GetAlarmPeriod());
 }
 
 TEST_F(LightSchedulerTest, FindObserverTrue)
@@ -246,13 +246,13 @@ TEST_F(LightSchedulerTest, UnregisterForAlarmActiveAndCheck)
     lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
     SetTimeTo(Monday, 1200);
 
-    timeServiceStub_.UnregisterObserver(observerHandle_);
+    lightScheduler_.UnregisterForTimeServiceEvent(observerHandle_);
 
     timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
     EXPECT_FALSE(timeServiceStub_.FindObserver(observerHandle_));
 
     CheckLightState(LightIdUnknown, LightStateUnknown);
-    EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
+    EXPECT_EQ(0, timeServiceStub_.GetAlarmPeriod());
 }
 
 TEST_F(LightSchedulerTest, SetAndGetAlaramPeriod)
