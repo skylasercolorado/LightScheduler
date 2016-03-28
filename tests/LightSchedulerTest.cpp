@@ -17,7 +17,6 @@ class LightSchedulerTest : public ::testing::Test
 
     const int AlarmPeriod = 60;
 
-
     LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_)
     {
         observerHandle_ = lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive, AlarmPeriod);

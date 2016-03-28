@@ -46,7 +46,6 @@ bool ITimeService::UnregisterObserver(ObserverHandle<ITimeService::TimeServiceEv
     return events_.UnregisterObserver(handle);
 }
 
-//bool ITimeService::FindObserver(TimeServiceEvents event, std::function<void(ITimeService::TimeServiceEvents)> fn)
 bool ITimeService::FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
 {
     return events_.FindObserver(handle);

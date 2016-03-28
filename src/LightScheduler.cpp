@@ -1,7 +1,4 @@
 #include "LightScheduler.hpp"
-#include <vector>
-#include <iostream>
-#include <stdexcept>
 #include <system_error>
 
 using namespace Camax;
@@ -64,7 +61,7 @@ bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::ite
             event->day_ == Everyday ||
             (event->day_ == Weekend && (today == Saturday || today == Sunday )) ||
             (event->day_ == Weekday && (today >= Monday && today <= Friday ))
-           ) && event->minuteOfDay_ == thisMinute ? true : false;
+           ) && event->minuteOfDay_ == thisMinute;
 }
 
 void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)

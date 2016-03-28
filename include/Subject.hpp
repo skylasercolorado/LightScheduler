@@ -81,6 +81,7 @@ namespace Camax
             return false;
         }
 
+        //TODO: Overload this to be called by UnregisterObserver() and it returns the found EventHandler.
         bool FindObserver(ObserverHandle<Event> &handle)
         {
             auto it = observers_.find(handle.event);
