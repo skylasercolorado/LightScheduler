@@ -2,7 +2,7 @@
 #define CAMAX_ITIMESERVICE_HPP
 
 #include <iostream>
-#include "Subject.hpp"
+#include "Subject.hpp" //TODO: Remove
 using namespace std;
 
 namespace Camax
@@ -35,9 +35,13 @@ namespace Camax
 
         virtual LightSchedulerTime& GetTime() = 0;
         virtual void SetAlarmPeriod(uint periodInSeconds) = 0;
+
+        // Utility functions (Not part of the specified interface).
         static void ValidateMinute(int minute);
         static void ValidateDay(Day day);
         static void ValidateDayMinute(int day, int minute);
+
+        // TODO: These Observer methods should be moved to the mock.
         ObserverHandle<TimeServiceEvents> RegisterObserver(TimeServiceEvents event,
                                                            Subject<ITimeService::TimeServiceEvents>::EventHandler fn);
         bool FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle);
@@ -45,6 +49,7 @@ namespace Camax
         bool UnregisterObserver(ObserverHandle<TimeServiceEvents> handle);
 
     private:
+        // TODO: This subject object should be moved to the mock.
         Subject<TimeServiceEvents> events_;
     };
 }
