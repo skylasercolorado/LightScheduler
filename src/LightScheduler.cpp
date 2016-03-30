@@ -64,18 +64,3 @@ bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::ite
             (event->day_ == Weekday && (today >= Monday && today <= Friday ))
            ) && event->minuteOfDay_ == thisMinute;
 }
-
-//void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
-//{
-//    switch(event)
-//    {
-//        case ITimeService::TimeServiceEvents::AlarmActive:
-//            this->WakeUp();
-//            break;
-//
-//        case ITimeService::TimeServiceEvents::Error:
-//            throw std::runtime_error("Generic time service error");
-//            break;
-//    }
-//}
-
