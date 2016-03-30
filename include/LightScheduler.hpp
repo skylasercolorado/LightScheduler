@@ -31,8 +31,6 @@ namespace Camax
         void ScheduleTurnOff(int id, Day day, int minute);
         void RemoveSchedule();
         void WakeUp();
-        //TODO: Should be private.
-//        void NotificationHandler(ITimeService::TimeServiceEvents event);
 
     private:
         vector<ScheduledLightEvent> scheduledLightEvents_;
@@ -40,7 +38,6 @@ namespace Camax
         ILightController &lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
-//        Subject<ITimeService::TimeServiceEvents>::EventHandler notificationHandler_;
     };
 }
 
