@@ -54,7 +54,7 @@ bool TimeServiceStub::FindObserver(ObserverHandle<TimeServiceEvents> handle)
 }
 
 ObserverHandle<ITimeService::TimeServiceEvents>
-TimeServiceStub::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event,
+TimeServiceStub::RegisterForTimeServiceEvent(TimeServiceEvents event,
                                              uint alarmPeriod,
                                              SubjectType::EventHandler notificationHandler)
 {
