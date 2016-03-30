@@ -205,22 +205,6 @@ TEST_F(LightSchedulerTest, NotRegisteredForTimeServiceEvent)
     EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
 }
 
-//TODO: Delete. Test no longer valid, because WakeUp doesn't take events as parameters.
-TEST_F(LightSchedulerTest, RegisteredForErrorTimeServiceEvent)
-{
-    lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
-    SetTimeTo(Monday, 1200);
-
-    // Register for the 'error' event and test the correct exception is thrown
-    timeServiceStub_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::Error,
-                                                 AlarmPeriod,
-                                                 std::bind(&LightScheduler::WakeUp, &lightScheduler_));
-    EXPECT_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error), std::runtime_error);
-
-    CheckLightState(LightIdUnknown, LightStateUnknown);
-    EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
-}
-
 TEST_F(LightSchedulerTest, UnregisterForAlarmActive)
 {
     lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
