@@ -19,7 +19,10 @@ class LightSchedulerTest : public ::testing::Test
 
     LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_)
     {
-        observerHandle_ = lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive, AlarmPeriod);
+//        observerHandle_ = lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive, AlarmPeriod);
+        observerHandle_ = timeServiceStub_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive,
+                                                                       AlarmPeriod,
+                                                                       std::bind(&LightScheduler::WakeUp, &lightScheduler_));
     }
 
     virtual void SetUp()
@@ -202,13 +205,16 @@ TEST_F(LightSchedulerTest, NotRegisteredForTimeServiceEvent)
     EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
 }
 
+//TODO: Delete. Test no longer valid, because WakeUp doesn't take events as parameters.
 TEST_F(LightSchedulerTest, RegisteredForErrorTimeServiceEvent)
 {
     lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
     SetTimeTo(Monday, 1200);
 
     // Register for the 'error' event and test the correct exception is thrown
-    lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::Error, AlarmPeriod);
+    timeServiceStub_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::Error,
+                                                 AlarmPeriod,
+                                                 std::bind(&LightScheduler::WakeUp, &lightScheduler_));
     EXPECT_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::Error), std::runtime_error);
 
     CheckLightState(LightIdUnknown, LightStateUnknown);
@@ -220,7 +226,7 @@ TEST_F(LightSchedulerTest, UnregisterForAlarmActive)
     lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
     SetTimeTo(Monday, 1200);
 
-    lightScheduler_.UnregisterForTimeServiceEvent(observerHandle_);
+    timeServiceStub_.UnregisterForTimeServiceEvent(observerHandle_);
 
     timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
 
@@ -245,7 +251,7 @@ TEST_F(LightSchedulerTest, UnregisterForAlarmActiveAndCheck)
     lightScheduler_.ScheduleTurnOn(3, Monday, 1200);
     SetTimeTo(Monday, 1200);
 
-    lightScheduler_.UnregisterForTimeServiceEvent(observerHandle_);
+    timeServiceStub_.UnregisterForTimeServiceEvent(observerHandle_);
 
     timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
     EXPECT_FALSE(timeServiceStub_.FindObserver(observerHandle_));

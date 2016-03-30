@@ -64,6 +64,7 @@ bool TimeServiceStub::FindObserver(ObserverHandle<ITimeService::TimeServiceEvent
     return TimeServiceStub::events_.FindObserver(handle);
 }
 
+//TODO: Duplicate function. Keep the one above.
 ObserverHandle<ITimeService::TimeServiceEvents>
 TimeServiceStub::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event,
                                              uint alarmPeriod,
@@ -73,6 +74,7 @@ TimeServiceStub::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents eve
     return RegisterObserver(event, notificationHandler);
 }
 
+//TODO: Duplicate function. Keep the one above.
 bool TimeServiceStub::UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle)
 {
     if(UnregisterObserver(handle))
