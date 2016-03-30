@@ -71,13 +71,15 @@ TimeServiceStub::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents eve
                                              SubjectType::EventHandler notificationHandler)
 {
     SetAlarmPeriod(alarmPeriod);
-    return RegisterObserver(event, notificationHandler);
+//    return RegisterObserver(event, notificationHandler);
+   return events_.RegisterObserver(event, notificationHandler);
 }
 
 //TODO: Duplicate function. Keep the one above.
 bool TimeServiceStub::UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle)
 {
-    if(UnregisterObserver(handle))
+//    if(UnregisterObserver(handle))
+    if(events_.UnregisterObserver(handle))
     {
         SetAlarmPeriod(0);
         return true;
