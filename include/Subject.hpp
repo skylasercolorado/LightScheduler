@@ -44,23 +44,12 @@ namespace Camax
             return handle;
         }
 
+        // Will throw out_of_range exception if no observer is found for the given event. Caller must handle it.
         void Notify(const Event &event, HandlerParams... params) const
         {
-            //TODO: Who should throw/rethrow or handle the exceptions? Originator or caller?
-            try
+            for (const auto &obs : observers_.at(event))
             {
-                for (const auto &obs : observers_.at(event))
-                {
-                    obs(params...);
-                }
-            }
-            catch (const std::out_of_range &ex)
-            {
-#ifdef DEBUG
-                std::cout << "\n\nNo observer is registered for this event\n";
-                std::cout << "Exception message: " << ex.what() << "\n\n";
-#endif // DEBUG
-                throw ex;
+                obs(params...);
             }
         }
 
