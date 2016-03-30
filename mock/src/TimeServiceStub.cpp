@@ -45,12 +45,12 @@ int TimeServiceStub::GetAlarmPeriod()
 
 void TimeServiceStub::NotifyObservers(TimeServiceEvents event)
 {
-    TimeServiceStub::events_.Notify(event);
+    events_.Notify(event);
 }
 
-bool TimeServiceStub::FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
+bool TimeServiceStub::FindObserver(ObserverHandle<TimeServiceEvents> handle)
 {
-    return TimeServiceStub::events_.FindObserver(handle);
+    return events_.FindObserver(handle);
 }
 
 ObserverHandle<ITimeService::TimeServiceEvents>
@@ -62,7 +62,7 @@ TimeServiceStub::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents eve
    return events_.RegisterObserver(event, notificationHandler);
 }
 
-bool TimeServiceStub::UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle)
+bool TimeServiceStub::UnregisterForTimeServiceEvent(ObserverHandle<TimeServiceEvents> handle)
 {
     if(events_.UnregisterObserver(handle))
     {

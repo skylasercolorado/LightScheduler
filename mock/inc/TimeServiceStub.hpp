@@ -19,30 +19,18 @@ namespace Camax
         static void SetDay(int day);
         static void Reset();
         static int GetAlarmPeriod();
-
-        // TODO: These Observer methods should be moved to the mock.
-        ObserverHandle<TimeServiceEvents> RegisterObserver(TimeServiceEvents event,
-                                                           SubjectType::EventHandler fn);
-
-        void NotifyObservers(TimeServiceEvents event);
-
-        bool UnregisterObserver(ObserverHandle<TimeServiceEvents> handle);
-
-        bool FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle);
-
-        //TODO: This shouldn't be here. The mock should be called instead. These two below.
-        //      Called from LightScheduler()
+        //TODO: To be called from LightScheduler()
         ObserverHandle<TimeServiceEvents> RegisterForTimeServiceEvent(TimeServiceEvents event,
                                                                       uint alarmPeriod,
                                                                       SubjectType::EventHandler notificationHandler);
-
-        //      Called from ~LightScheduler(), through helper safe-guarded method
-        bool UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle);
+        //TODO: To be called from ~LightScheduler(), through helper safe-guarded method
+        bool UnregisterForTimeServiceEvent(ObserverHandle<TimeServiceEvents> handle);
+        void NotifyObservers(TimeServiceEvents event);
+        bool FindObserver(ObserverHandle<TimeServiceEvents> handle);
 
     private:
         static LightSchedulerTime time_;
         static int periodInSeconds_;
-        // TODO: This subject object should be moved to the mock.
         SubjectType events_;
     };
 }
