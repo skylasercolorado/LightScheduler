@@ -43,20 +43,9 @@ int TimeServiceStub::GetAlarmPeriod()
     return periodInSeconds_;
 }
 
-ObserverHandle<ITimeService::TimeServiceEvents> TimeServiceStub::RegisterObserver(ITimeService::TimeServiceEvents event,
-                                                                    SubjectType::EventHandler fn)
-{
-    return events_.RegisterObserver(event, fn);
-}
-
 void TimeServiceStub::NotifyObservers(TimeServiceEvents event)
 {
     TimeServiceStub::events_.Notify(event);
-}
-
-bool TimeServiceStub::UnregisterObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
-{
-    return TimeServiceStub::events_.UnregisterObserver(handle);
 }
 
 bool TimeServiceStub::FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
@@ -64,21 +53,17 @@ bool TimeServiceStub::FindObserver(ObserverHandle<ITimeService::TimeServiceEvent
     return TimeServiceStub::events_.FindObserver(handle);
 }
 
-//TODO: Duplicate function. Keep the one above.
 ObserverHandle<ITimeService::TimeServiceEvents>
 TimeServiceStub::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event,
                                              uint alarmPeriod,
                                              SubjectType::EventHandler notificationHandler)
 {
     SetAlarmPeriod(alarmPeriod);
-//    return RegisterObserver(event, notificationHandler);
    return events_.RegisterObserver(event, notificationHandler);
 }
 
-//TODO: Duplicate function. Keep the one above.
 bool TimeServiceStub::UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle)
 {
-//    if(UnregisterObserver(handle))
     if(events_.UnregisterObserver(handle))
     {
         SetAlarmPeriod(0);
