@@ -19,11 +19,11 @@ namespace Camax
         unsigned int vectorIndex;
     };
 
-    template<typename Event, typename... Args>
+    template<typename Event, typename... HandlerParams>
     class Subject {
     public:
 
-        typedef std::function<void(Args...)> EventHandler;
+        typedef std::function<void(HandlerParams...)> EventHandler;
 
         template<typename Observer>
         const ObserverHandle<Event> RegisterObserver(const Event &event, Observer &&observer)
@@ -43,7 +43,7 @@ namespace Camax
             return handle;
         }
 
-        void Notify(const Event &event, Args... params) const
+        void Notify(const Event &event, HandlerParams... params) const
         {
             //TODO: Who should throw/rethrow or handle the exceptions? Originator or caller?
             try
