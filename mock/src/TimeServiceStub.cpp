@@ -1,3 +1,5 @@
+#include "LightScheduler.hpp"
+#include "TimeServiceStub.hpp"
 #include "TimeServiceStub.hpp"
 #include <stdexcept>
 #include <iostream>
@@ -39,4 +41,45 @@ void TimeServiceStub::SetDay(int day)
 int TimeServiceStub::GetAlarmPeriod()
 {
     return periodInSeconds_;
+}
+
+ObserverHandle<ITimeService::TimeServiceEvents> TimeServiceStub::RegisterObserver(ITimeService::TimeServiceEvents event,
+                                                                    SubjectType::EventHandler fn)
+{
+    return events_.RegisterObserver(event, fn);
+}
+
+void TimeServiceStub::NotifyObservers(TimeServiceEvents event)
+{
+    TimeServiceStub::events_.Notify(event);
+}
+
+bool TimeServiceStub::UnregisterObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
+{
+    return TimeServiceStub::events_.UnregisterObserver(handle);
+}
+
+bool TimeServiceStub::FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
+{
+    return TimeServiceStub::events_.FindObserver(handle);
+}
+
+ObserverHandle<ITimeService::TimeServiceEvents>
+TimeServiceStub::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event,
+                                             uint alarmPeriod,
+                                             SubjectType::EventHandler notificationHandler)
+{
+    SetAlarmPeriod(alarmPeriod);
+    return RegisterObserver(event, notificationHandler);
+}
+
+bool TimeServiceStub::UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle)
+{
+    if(UnregisterObserver(handle))
+    {
+        SetAlarmPeriod(0);
+        return true;
+    }
+
+    return false;
 }

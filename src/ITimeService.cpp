@@ -1,4 +1,5 @@
 #include "ITimeService.hpp"
+#include "TimeServiceStub.hpp"
 #include <stdexcept>
 
 using namespace Camax;
@@ -30,23 +31,3 @@ void ITimeService::ValidateDayMinute(int day, int minute)
     ValidateMinute(minute);
 }
 
-ObserverHandle<ITimeService::TimeServiceEvents> ITimeService::RegisterObserver(TimeServiceEvents event,
-                                                                               Subject<ITimeService::TimeServiceEvents>::EventHandler fn)
-{
-    return events_.RegisterObserver(event, fn);
-}
-
-void ITimeService::NotifyObservers(TimeServiceEvents event)
-{
-    events_.Notify(event);
-}
-
-bool ITimeService::UnregisterObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
-{
-    return events_.UnregisterObserver(handle);
-}
-
-bool ITimeService::FindObserver(ObserverHandle<ITimeService::TimeServiceEvents> handle)
-{
-    return events_.FindObserver(handle);
-}

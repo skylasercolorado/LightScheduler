@@ -1,4 +1,5 @@
 #include "LightScheduler.hpp"
+#include "TimeServiceStub.hpp"
 #include <system_error>
 
 using namespace Camax;
@@ -64,33 +65,17 @@ bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::ite
            ) && event->minuteOfDay_ == thisMinute;
 }
 
-void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
-{
-    switch(event)
-    {
-        case ITimeService::TimeServiceEvents::AlarmActive:
-            this->WakeUp();
-            break;
+//void LightScheduler::NotificationHandler(ITimeService::TimeServiceEvents event)
+//{
+//    switch(event)
+//    {
+//        case ITimeService::TimeServiceEvents::AlarmActive:
+//            this->WakeUp();
+//            break;
+//
+//        case ITimeService::TimeServiceEvents::Error:
+//            throw std::runtime_error("Generic time service error");
+//            break;
+//    }
+//}
 
-        case ITimeService::TimeServiceEvents::Error:
-            throw std::runtime_error("Generic time service error");
-            break;
-    }
-}
-
-ObserverHandle<ITimeService::TimeServiceEvents> LightScheduler::RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents event, uint alarmPeriod)
-{
-    timeService_.SetAlarmPeriod(alarmPeriod);
-    return timeService_.RegisterObserver(event, notificationHandler_);
-}
-
-bool LightScheduler::UnregisterForTimeServiceEvent(ObserverHandle<ITimeService::TimeServiceEvents> handle)
-{
-    if(timeService_.UnregisterObserver(handle))
-    {
-        timeService_.SetAlarmPeriod(0);
-        return true;
-    }
-
-    return false;
-}
