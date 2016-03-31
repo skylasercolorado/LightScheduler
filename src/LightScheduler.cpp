@@ -64,3 +64,9 @@ bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::ite
             (event->day_ == Weekday && (today >= Monday && today <= Friday ))
            ) && event->minuteOfDay_ == thisMinute;
 }
+void LightScheduler::destroy()
+{
+    alreadyDestroyed_ = true;
+
+    //TODO: Add destruction code
+}

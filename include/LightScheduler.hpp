@@ -24,9 +24,14 @@ namespace Camax
     {
     public:
         LightScheduler(ITimeService &_timeService, ILightController &_lightController) :
-                timeService_(_timeService), lightController_(_lightController) { }
+                timeService_(_timeService), lightController_(_lightController), alreadyDestroyed_(false) { }
         //TODO: Add destructor and test with artificial block. Then, write helper destroy() that keeps tab if it already
         //      has been called (no need to use artificial block).
+        ~LightScheduler()
+        {
+            if(!alreadyDestroyed_)
+                destroy();
+        }
         void ScheduleTurnOn(int id, Day day, int minute);
         void ScheduleTurnOff(int id, Day day, int minute);
         void RemoveSchedule();
@@ -38,6 +43,8 @@ namespace Camax
         ILightController &lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
+        bool alreadyDestroyed_;
+        void destroy();
     };
 }
 

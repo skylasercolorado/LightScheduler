@@ -9,9 +9,6 @@ namespace Camax
     class TimeServiceStub : public ITimeService
     {
     public:
-        typedef Subject<TimeServiceEvents> SubjectType;
-
-    public:
         virtual LightSchedulerTime &GetTime();
         virtual void SetAlarmPeriod(uint periodInSeconds);
         // The actual mock starts from hereon forward
