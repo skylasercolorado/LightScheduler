@@ -9,10 +9,6 @@ namespace Camax
     class TimeServiceStub : public ITimeService
     {
     public:
-        TimeServiceStub()
-        {
-            std::cout << "\n TimeServiceStub object created \n";
-        }
         virtual LightSchedulerTime &GetTime();
         virtual void SetAlarmPeriod(uint periodInSeconds);
         // The actual mock starts from hereon forward

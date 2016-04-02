@@ -8,10 +8,6 @@ namespace Camax
     class LightControllerStub : public ILightController
     {
     public:
-        LightControllerStub()
-        {
-            std::cout << "\n LightControllerStub \n";
-        }
         void TurnOn(int id);
         void TurnOff(int id);
         // The actual mock starts from hereon forward

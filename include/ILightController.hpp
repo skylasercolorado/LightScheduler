@@ -16,10 +16,6 @@ namespace Camax
     class ILightController
     {
     public:
-        ILightController()
-        {
-            std::cout << "\n ILightController \n";
-        }
         virtual void TurnOn(int id) = 0;
         virtual void TurnOff(int id) = 0;
     };

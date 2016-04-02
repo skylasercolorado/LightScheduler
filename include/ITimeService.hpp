@@ -35,11 +35,6 @@ namespace Camax
         enum class TimeServiceEvents { AlarmActive, Error};
         typedef Subject<TimeServiceEvents> SubjectType;
 
-        ITimeService()
-        {
-            std::cout << "\n ITimeService \n";
-        }
-
         virtual LightSchedulerTime& GetTime() = 0;
         virtual void SetAlarmPeriod(uint periodInSeconds) = 0;
         virtual ObserverHandle<TimeServiceEvents>

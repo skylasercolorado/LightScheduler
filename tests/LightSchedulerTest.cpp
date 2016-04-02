@@ -19,7 +19,6 @@ class LightSchedulerTest : public ::testing::Test
 
     LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_, AlarmPeriod)
     {
-        std::cout << "\n LightSchedulerTest \n";
         observerHandle_ = lightScheduler_.getObserverHandle();
     }
 
