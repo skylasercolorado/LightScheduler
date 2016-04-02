@@ -70,3 +70,8 @@ void LightScheduler::destroy()
 
     //TODO: Add destruction code
 }
+
+ObserverHandle<ITimeService::TimeServiceEvents> LightScheduler::getObserverHandle()
+{
+    return observerHandle_;
+}

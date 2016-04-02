@@ -23,6 +23,10 @@ namespace Camax
     class Subject {
     public:
 
+        Subject()
+        {
+            std::cout << "\n Subject \n";
+        }
         typedef std::function<void(HandlerParams...)> EventHandler;
         typedef std::map<Event, std::vector<EventHandler>> SubjectContainer;
 

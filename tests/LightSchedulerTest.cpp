@@ -17,12 +17,10 @@ class LightSchedulerTest : public ::testing::Test
 
     const int AlarmPeriod = 60;
 
-    LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_)
+    LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_, AlarmPeriod)
     {
-//        observerHandle_ = lightScheduler_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive, AlarmPeriod);
-        observerHandle_ = timeServiceStub_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive,
-                                                                       AlarmPeriod,
-                                                                       std::bind(&LightScheduler::WakeUp, &lightScheduler_));
+        std::cout << "\n LightSchedulerTest \n";
+        observerHandle_ = lightScheduler_.getObserverHandle();
     }
 
     virtual void SetUp()
@@ -39,10 +37,10 @@ class LightSchedulerTest : public ::testing::Test
     void SetTimeTo(Day day, int minute);
     void CheckLightState(int id, LightStatus lightStatus);
 
-    LightScheduler lightScheduler_;
     LightControllerStub lightControllerStub_;
     TimeServiceStub timeServiceStub_;
     ObserverHandle<ITimeService::TimeServiceEvents> observerHandle_;
+    LightScheduler lightScheduler_;
 };
 
 void LightSchedulerTest::SetTimeTo(Day day, int minute)

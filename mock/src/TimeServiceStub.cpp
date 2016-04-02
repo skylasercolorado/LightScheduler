@@ -59,7 +59,7 @@ TimeServiceStub::RegisterForTimeServiceEvent(TimeServiceEvents event,
                                              SubjectType::EventHandler notificationHandler)
 {
     SetAlarmPeriod(alarmPeriod);
-   return events_.RegisterObserver(event, notificationHandler);
+    return events_.RegisterObserver(event, notificationHandler);
 }
 
 bool TimeServiceStub::UnregisterForTimeServiceEvent(ObserverHandle<TimeServiceEvents> handle)
