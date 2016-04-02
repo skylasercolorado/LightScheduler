@@ -247,3 +247,9 @@ TEST_F(LightSchedulerTest, SetAndGetAlaramPeriod)
 
     EXPECT_EQ(23, timeServiceStub_.GetAlarmPeriod());
 }
+
+TEST_F(LightSchedulerTest, CreateStartsOneMinuteAlarm)
+{
+    EXPECT_TRUE(timeServiceStub_.FindObserver(observerHandle_));
+    EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
+}
