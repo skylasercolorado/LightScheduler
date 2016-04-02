@@ -253,3 +253,10 @@ TEST_F(LightSchedulerTest, CreateStartsOneMinuteAlarm)
     EXPECT_TRUE(timeServiceStub_.FindObserver(observerHandle_));
     EXPECT_EQ(AlarmPeriod, timeServiceStub_.GetAlarmPeriod());
 }
+
+TEST_F(LightSchedulerTest, DestroyCancelsOneMinuteAlarm)
+{
+    lightScheduler_.destroy();
+    EXPECT_FALSE(timeServiceStub_.FindObserver(observerHandle_));
+    EXPECT_EQ(0, timeServiceStub_.GetAlarmPeriod());
+}
