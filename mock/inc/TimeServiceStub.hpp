@@ -16,11 +16,9 @@ namespace Camax
         static void SetDay(int day);
         static void Reset();
         static int GetAlarmPeriod();
-        //TODO: To be called from LightScheduler()
         ObserverHandle<TimeServiceEvents> RegisterForTimeServiceEvent(TimeServiceEvents event,
                                                                               uint alarmPeriod,
                                                                               SubjectType::EventHandler notificationHandler);
-        //TODO: To be called from ~LightScheduler(), through helper safe-guarded method
         bool UnregisterForTimeServiceEvent(ObserverHandle<TimeServiceEvents> handle);
         void NotifyObservers(TimeServiceEvents event);
         bool FindObserver(ObserverHandle<TimeServiceEvents> handle);

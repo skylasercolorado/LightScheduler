@@ -27,9 +27,6 @@ namespace Camax
                 timeService_(_timeService), lightController_(_lightController), alarmPeriod_(_alarmPeriod),
                 alreadyDestroyed_(false)
         {
-            //TODO: Cannot call these virtual inherited methods here, because at this point, the referenced
-            // objects are not yet created. This is causing the segmentation fault. Solution: Make a helper method
-            // and call it from the application level or create these independent objects before LightScheduler.
             observerHandle_ = timeService_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive,
                                                                        alarmPeriod_,
                                                                        std::bind(&LightScheduler::WakeUp, this));
@@ -38,8 +35,7 @@ namespace Camax
         //      has been called (no need to use artificial block).
         ~LightScheduler()
         {
-            if(!alreadyDestroyed_)
-                destroy();
+            destroy();
         }
         void ScheduleTurnOn(int id, Day day, int minute);
         void ScheduleTurnOff(int id, Day day, int minute);

@@ -66,9 +66,11 @@ bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::ite
 }
 void LightScheduler::destroy()
 {
-    alreadyDestroyed_ = true;
-
-    //TODO: Add destruction code
+    if(!alreadyDestroyed_)
+    {
+        if(timeService_.UnregisterForTimeServiceEvent(observerHandle_))
+            alreadyDestroyed_ = true;
+    }
 }
 
 ObserverHandle<ITimeService::TimeServiceEvents> LightScheduler::getObserverHandle()

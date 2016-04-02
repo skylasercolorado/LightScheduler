@@ -64,11 +64,14 @@ namespace Camax
                 // Get iterator to observer to remove
                 auto observerToRemove = eventVector.begin() + handle.vectorIndex;
                 // Remove the desired observer
-                eventVector.erase(observerToRemove);
-                // Re associated the modified event vector to the observers map
-                observers_[handle.event] = eventVector;
+                if(observerToRemove != eventVector.end())
+                {
+                    eventVector.erase(observerToRemove);
+                    // Re associated the modified event vector to the observers map
+                    observers_[handle.event] = eventVector;
 
-                return true;
+                    return true;
+                }
             }
 
             return false;
