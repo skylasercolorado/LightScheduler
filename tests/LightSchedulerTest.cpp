@@ -50,8 +50,9 @@ void LightSchedulerTest::SetTimeTo(Day day, int minute)
 
 void LightSchedulerTest::CheckLightState(int id, LightStatus lightStatus)
 {
-    EXPECT_EQ(id, lightControllerStub_.GetLastId());
-    EXPECT_EQ(lightStatus, lightControllerStub_.GetLastState());
+//    EXPECT_EQ(id, lightControllerStub_.GetLastId());
+//    EXPECT_EQ(lightStatus, lightControllerStub_.GetLastState());
+    EXPECT_EQ(lightStatus, lightControllerStub_.GetLightState(id));
 }
 
 // Testing the light controller stub after Reset
@@ -259,4 +260,17 @@ TEST_F(LightSchedulerTest, DestroyCancelsOneMinuteAlarm)
     lightScheduler_.destroy();
     EXPECT_FALSE(timeServiceStub_.FindObserver(observerHandle_));
     EXPECT_EQ(0, timeServiceStub_.GetAlarmPeriod());
+}
+
+TEST_F(LightSchedulerTest, ScheduleTwoEventsAtTheSameTime)
+{
+    lightScheduler_.ScheduleTurnOn(3, Sunday, 1200);
+    lightScheduler_.ScheduleTurnOn(12, Sunday, 1200);
+
+    SetTimeTo(Sunday, 1200);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateOn);
+    CheckLightState(12, LightStateOn);
 }
