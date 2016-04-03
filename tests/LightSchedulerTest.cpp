@@ -50,8 +50,6 @@ void LightSchedulerTest::SetTimeTo(Day day, int minute)
 
 void LightSchedulerTest::CheckLightState(int id, LightStatus lightStatus)
 {
-//    EXPECT_EQ(id, lightControllerStub_.GetLastId());
-//    EXPECT_EQ(lightStatus, lightControllerStub_.GetLastState());
     EXPECT_EQ(lightStatus, lightControllerStub_.GetLightState(id));
 }
 
