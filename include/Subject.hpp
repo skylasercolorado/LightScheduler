@@ -56,38 +56,18 @@ namespace Camax
 
         bool UnregisterObserver(ObserverHandle<Event> &handle)
         {
-//            auto it = observers_.find(handle.event);
-//
-//            if(it != observers_.end())
-//            {
-//                 Get the vector associated with the event
-//                auto eventVector = observers_[handle.event];
-//                 Get iterator to observer to remove
-//                auto observerToRemove = eventVector.begin() + handle.vectorIndex;
-//                 Remove the desired observer
-//                if(observerToRemove != eventVector.end())
-//                {
-//                    eventVector.erase(observerToRemove);
-//                     Re associated the modified event vector to the observers map
-//                    observers_[handle.event] = eventVector;
-//
-//                    return true;
-//                }
-//            }
-
             if(FindObserver(handle))
             {
-                    eventVector_.erase(observerToRemove_);
-                    // Re-associate the modified event vector to the observers map
-                    observers_[handle.event] = eventVector_;
+                eventVector_.erase(observerToRemove_);
+                // Re-associate the modified event vector to the observers map
+                observers_[handle.event] = eventVector_;
 
-                    return true;
-                }
+                return true;
+            }
 
             return false;
         }
 
-        //TODO: Overload this to be called by UnregisterObserver() and it returns the found EventHandler.
         bool FindObserver(ObserverHandle<Event> &handle)
         {
             auto it = observers_.find(handle.event);
