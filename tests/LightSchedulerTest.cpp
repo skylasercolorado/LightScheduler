@@ -286,3 +286,17 @@ TEST_F(LightSchedulerTest, DestructorWithArtificialBlock)
 
     EXPECT_FALSE(timeServiceStub_.FindObserver(testHandle));
 }
+
+TEST_F(LightSchedulerTest, DestructorWithHelperFunction)
+{
+    ObserverHandle<ITimeService::TimeServiceEvents> testHandle;
+
+    LightScheduler testInstance(timeServiceStub_, lightControllerStub_, AlarmPeriod);
+    testHandle = testInstance.getObserverHandle();
+
+    EXPECT_TRUE(timeServiceStub_.FindObserver(testHandle));
+
+    testInstance.destroy();
+
+    EXPECT_FALSE(timeServiceStub_.FindObserver(testHandle));
+}
