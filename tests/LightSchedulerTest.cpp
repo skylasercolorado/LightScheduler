@@ -272,3 +272,17 @@ TEST_F(LightSchedulerTest, ScheduleTwoEventsAtTheSameTime)
     CheckLightState(3, LightStateOn);
     CheckLightState(12, LightStateOn);
 }
+
+TEST_F(LightSchedulerTest, DestructorWithArtificialBlock)
+{
+    ObserverHandle<ITimeService::TimeServiceEvents> testHandle;
+
+    {
+        LightScheduler testInstance(timeServiceStub_, lightControllerStub_, AlarmPeriod);
+        testHandle = testInstance.getObserverHandle();
+
+        EXPECT_TRUE(timeServiceStub_.FindObserver(testHandle));
+    }
+
+    EXPECT_FALSE(timeServiceStub_.FindObserver(testHandle));
+}
