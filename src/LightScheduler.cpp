@@ -1,6 +1,7 @@
 #include "LightScheduler.hpp"
 #include "TimeServiceStub.hpp"
 #include <system_error>
+#include <algorithm>
 
 using namespace Camax;
 using namespace std;
@@ -20,9 +21,38 @@ void LightScheduler::ScheduleTurnOff(int id, Day day, int minute)
     scheduledLightEvents_.push_back(ScheduledLightEvent(id, day, minute, LightStateOff));
 }
 
-void LightScheduler::RemoveSchedule()
+void LightScheduler::RemoveSchedule(int id, Day day, int minute)
+{
+    ITimeService::ValidateDayMinute(day, minute);
+
+//    for(vector<ScheduledLightEvent>::iterator it = scheduledLightEvents_.begin();
+//        it != scheduledLightEvents_.end(); it++)
+//    {
+//        if(it->id_ == id &&
+//           it->day_ == day &&
+//           it->minuteOfDay_ == minute)
+//        {
+//            scheduledLightEvents_.erase(it);
+//        }
+//    }
+
+    scheduledLightEvents_.erase(std::remove_if(scheduledLightEvents_.begin(), scheduledLightEvents_.end(),
+                                               [&, this](ScheduledLightEvent x)
+                                               {
+                                                   return this->compare(ScheduledLightEvent(id, day, minute,LightStateOn), x);
+                                               }),
+                                scheduledLightEvents_.end());
+}
+
+bool LightScheduler::compare(ScheduledLightEvent event, ScheduledLightEvent x)
 {
 
+    if(x.id_ == event.id_ &&
+       x.day_ == event.day_ &&
+       x.minuteOfDay_ == event.minuteOfDay_)
+        return true;
+    else
+        return false;
 }
 
 void LightScheduler::WakeUp()

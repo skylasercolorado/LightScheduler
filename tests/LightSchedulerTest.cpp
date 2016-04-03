@@ -300,3 +300,16 @@ TEST_F(LightSchedulerTest, DestructorWithHelperFunction)
 
     EXPECT_FALSE(timeServiceStub_.FindObserver(testHandle));
 }
+
+TEST_F(LightSchedulerTest, RemoveSchedule)
+{
+    lightScheduler_.ScheduleTurnOn(3, Sunday, 1200);
+
+    lightScheduler_.RemoveSchedule(3, Sunday, 1200);
+
+    SetTimeTo(Sunday, 1200);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateUnknown);
+}

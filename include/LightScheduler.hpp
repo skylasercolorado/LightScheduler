@@ -37,7 +37,7 @@ namespace Camax
         }
         void ScheduleTurnOn(int id, Day day, int minute);
         void ScheduleTurnOff(int id, Day day, int minute);
-        void RemoveSchedule();
+        void RemoveSchedule(int id, Day day, int minute);
         void WakeUp();
         ObserverHandle<ITimeService::TimeServiceEvents> getObserverHandle();
         void destroy();
@@ -51,6 +51,7 @@ namespace Camax
         bool alreadyDestroyed_;
         ObserverHandle<ITimeService::TimeServiceEvents> observerHandle_;
         uint alarmPeriod_;
+        bool compare(ScheduledLightEvent event, ScheduledLightEvent x);
     };
 }
 
