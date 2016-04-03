@@ -31,8 +31,6 @@ namespace Camax
                                                                        alarmPeriod_,
                                                                        std::bind(&LightScheduler::WakeUp, this));
         }
-        //TODO: Add destructor and test with artificial block. Then, write helper destroy() that keeps tab if it already
-        //      has been called (no need to use artificial block).
         ~LightScheduler()
         {
             destroy();
