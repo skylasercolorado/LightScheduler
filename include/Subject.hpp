@@ -85,12 +85,14 @@ namespace Camax
             if(it != observers_.end())
             {
                 // Get the vector associated with the event
-                auto eventVector = observers_[handle.event];
-                if(eventVector.size() > handle.vectorIndex)
+//                auto eventVector = observers_[handle.event];
+                eventVector_ = observers_[handle.event];
+                if(eventVector_.size() > handle.vectorIndex)
                 {
                     // Get iterator to observer to remove
-                    auto observerToRemove = eventVector.begin() + handle.vectorIndex;
-                    if(observerToRemove != eventVector.end())
+//                    auto observerToRemove_ = eventVector.begin() + handle.vectorIndex;
+                    observerToRemove_ = eventVector_.begin() + handle.vectorIndex;
+                    if(observerToRemove_ != eventVector_.end())
                         return true;
                 }
             }
@@ -100,6 +102,10 @@ namespace Camax
 
     private:
         SubjectContainer observers_;
+        std::vector<EventHandler> eventVector_;
+//        __gnu_cxx::__normal_iterator<EventHandler*, std::vector<EventHandler>> observerToRemove_;
+//        std::vector<EventHandler*>::iterator observerToRemove_;
+        typename std::vector<EventHandler>::iterator observerToRemove_;
     };
 }
 #endif //HELLOCLION_SUBJECT_HPP
