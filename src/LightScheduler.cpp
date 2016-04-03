@@ -25,17 +25,6 @@ void LightScheduler::RemoveSchedule(int id, Day day, int minute)
 {
     ITimeService::ValidateDayMinute(day, minute);
 
-//    for(vector<ScheduledLightEvent>::iterator it = scheduledLightEvents_.begin();
-//        it != scheduledLightEvents_.end(); it++)
-//    {
-//        if(it->id_ == id &&
-//           it->day_ == day &&
-//           it->minuteOfDay_ == minute)
-//        {
-//            scheduledLightEvents_.erase(it);
-//        }
-//    }
-
     scheduledLightEvents_.erase(std::remove_if(scheduledLightEvents_.begin(), scheduledLightEvents_.end(),
                                                [&, this](ScheduledLightEvent x)
                                                {
