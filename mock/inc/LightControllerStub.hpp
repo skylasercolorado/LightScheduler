@@ -22,7 +22,6 @@ namespace Camax
         static int lastId_;
         static LightStatus lastState_;
         LightControllerStore lightControllerStore_;
-        LightControllerStore::iterator it;
         void storeLightState(uint id, LightStatus state);
     };
 }

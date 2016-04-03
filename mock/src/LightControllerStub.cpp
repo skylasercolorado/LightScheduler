@@ -30,6 +30,8 @@ void LightControllerStub::TurnOff(int id)
 
 void LightControllerStub::storeLightState(uint id, LightStatus state)
 {
+    LightControllerStore::iterator it;
+
     it = lightControllerStore_.find(id);
     if(it != lightControllerStore_.end())
         lightControllerStore_.at(id) = state;
@@ -39,6 +41,8 @@ void LightControllerStub::storeLightState(uint id, LightStatus state)
 
 LightStatus LightControllerStub::GetLightState(uint id)
 {
+    LightControllerStore::iterator it;
+
     it = lightControllerStore_.find(id);
     if(it != lightControllerStore_.end())
        return it->second;
