@@ -318,6 +318,8 @@ TEST_F(LightSchedulerTest, RemoveMultipleScheduledEvent)
 {
     lightScheduler_.ScheduleTurnOn(6, Monday, 600);
     lightScheduler_.ScheduleTurnOn(7, Monday, 600);
+    // Through gcc options, won't let app programmer enter negative values. These are all uints. gcc will halt.
+    // lightScheduler_.ScheduleTurnOn(-17, Monday, 600);
 
     lightScheduler_.RemoveSchedule(6, Monday, 600);
 

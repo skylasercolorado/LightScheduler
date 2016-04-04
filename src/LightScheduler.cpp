@@ -7,21 +7,21 @@ using namespace Camax;
 using namespace std;
 using namespace std::placeholders;
 
-void LightScheduler::ScheduleTurnOn(int id, Day day, int minute)
+void LightScheduler::ScheduleTurnOn(uint id, Day day, uint minute)
 {
     ITimeService::ValidateDayMinute(day, minute);
 
     scheduledLightEvents_.push_back(ScheduledLightEvent(id, day, minute, LightStateOn));
 }
 
-void LightScheduler::ScheduleTurnOff(int id, Day day, int minute)
+void LightScheduler::ScheduleTurnOff(uint id, Day day, uint minute)
 {
     ITimeService::ValidateDayMinute(day, minute);
 
     scheduledLightEvents_.push_back(ScheduledLightEvent(id, day, minute, LightStateOff));
 }
 
-void LightScheduler::RemoveSchedule(int id, Day day, int minute)
+void LightScheduler::RemoveSchedule(uint id, Day day, uint minute)
 {
     ITimeService::ValidateDayMinute(day, minute);
 
@@ -71,8 +71,8 @@ void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator &
 
 bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event)
 {
-    int today = timeService_.GetTime().dayOfWeek;
-    int thisMinute = timeService_.GetTime().minuteOfDay;
+    Day today = timeService_.GetTime().dayOfWeek;
+    uint thisMinute = timeService_.GetTime().minuteOfDay;
 
     return (event->day_ == today ||
             event->day_ == Everyday ||

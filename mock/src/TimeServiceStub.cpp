@@ -34,11 +34,11 @@ void TimeServiceStub::SetMinute(uint minute)
 
 void TimeServiceStub::SetDay(Day day)
 {
-    ValidateDay((Monday));
+    ValidateDay(day);
     time_.dayOfWeek = day;
 }
 
-int TimeServiceStub::GetAlarmPeriod()
+uint TimeServiceStub::GetAlarmPeriod()
 {
     return periodInSeconds_;
 }

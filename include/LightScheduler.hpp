@@ -13,10 +13,10 @@ namespace Camax
     {
         uint id_;
         Day day_;
-        int minuteOfDay_;
+        uint minuteOfDay_;
         LightStatus lightStatus_;
     
-        ScheduledLightEvent(uint id, Day day, int minuteOfDay, LightStatus lightStatus = LightStateUnknown) :
+        ScheduledLightEvent(uint id, Day day, uint minuteOfDay, LightStatus lightStatus = LightStateUnknown) :
                 id_(id), day_(day), minuteOfDay_(minuteOfDay), lightStatus_(lightStatus)  {}
     };
   
@@ -35,9 +35,9 @@ namespace Camax
         {
             destroy();
         }
-        void ScheduleTurnOn(int id, Day day, int minute);
-        void ScheduleTurnOff(int id, Day day, int minute);
-        void RemoveSchedule(int id, Day day, int minute);
+        void ScheduleTurnOn(uint id, Day day, uint minute);
+        void ScheduleTurnOff(uint id, Day day, uint minute);
+        void RemoveSchedule(uint id, Day day, uint minute);
         void WakeUp();
         ObserverHandle<ITimeService::TimeServiceEvents> getObserverHandle();
         void destroy();

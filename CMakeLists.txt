@@ -5,7 +5,7 @@ project(helloClion)
 # Uncomment to enable 'debug' code
 #add_definitions(-DDEBUG)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -O0 -pedantic -ansi -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsign-conversion -Werror -Wall -Wextra -pedantic -g -O0 -ansi -std=c++11")
 
 # Project directory structure. DO NOT CHANGE.
 set(APP_DIR "app") # Where the application main() code resides

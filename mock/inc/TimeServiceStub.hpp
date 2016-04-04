@@ -15,7 +15,7 @@ namespace Camax
         static void SetMinute(uint minute);
         static void SetDay(Day day);
         static void Reset();
-        static int GetAlarmPeriod();
+        static uint GetAlarmPeriod();
         ObserverHandle<TimeServiceEvents> RegisterForTimeServiceEvent(TimeServiceEvents event,
                                                                               uint alarmPeriod,
                                                                               SubjectType::EventHandler notificationHandler);
