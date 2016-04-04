@@ -80,10 +80,11 @@ TEST_F(LightSchedulerTest, Set)
 TEST_F(LightSchedulerTest, ScheduleOnEverydayNotTimeYet)
 {
     lightScheduler_.ScheduleTurnOn(3, Everyday, 1200);
+    lightScheduler_.ScheduleTurnOn(4, Everyday, 1199);
     SetTimeTo(Monday, 1199);
     lightScheduler_.WakeUp();
 
-    CheckLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(3, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleOnEverydayItsTime)
@@ -119,7 +120,7 @@ TEST_F(LightSchedulerTest, ScheduleTuesdayButItsMonday)
     SetTimeTo(Monday, 1200);
     lightScheduler_.WakeUp();
 
-    CheckLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(3, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleTuesdayAndItsTuesday)
@@ -137,7 +138,7 @@ TEST_F(LightSchedulerTest, ScheduleWeekEndItsFriday)
     SetTimeTo(Friday, 1200);
     lightScheduler_.WakeUp();
 
-    CheckLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(3, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleWeekEndItsSaturday)
@@ -155,7 +156,7 @@ TEST_F(LightSchedulerTest, ScheduleWeekEndItsMonday)
     SetTimeTo(Monday, 1200);
     lightScheduler_.WakeUp();
 
-    CheckLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(3, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, ScheduleWeekdayItsMonday)
@@ -173,7 +174,7 @@ TEST_F(LightSchedulerTest, ScheduleWeekdayItsSaturday)
     SetTimeTo(Saturday, 1200);
     lightScheduler_.WakeUp();
 
-    CheckLightState(LightIdUnknown, LightStateUnknown);
+    CheckLightState(3, LightStateUnknown);
 }
 
 TEST_F(LightSchedulerTest, CallbackThroughObserverPattern)
@@ -332,3 +333,70 @@ TEST_F(LightSchedulerTest, RemoveMultipleScheduledEvent)
 }
 
 //TODO: Add the pending tests on the list.
+
+TEST_F(LightSchedulerTest, RemoveNonScheduledEvent)
+{
+    lightScheduler_.RemoveSchedule(6, Monday, 600);
+
+    SetTimeTo(Monday, 600);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(6, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, MultipleScheduledEventsForSameLight)
+{
+    lightScheduler_.ScheduleTurnOn(6, Monday, 600);
+    lightScheduler_.ScheduleTurnOff(6, Monday, 700);
+
+    SetTimeTo(Monday, 600);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+    CheckLightState(6, LightStateOn);
+
+    SetTimeTo(Monday, 700);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(6, LightStateOff);
+}
+
+TEST_F(LightSchedulerTest, MultipleScheduledEventsAtSameTime)
+{
+    lightScheduler_.ScheduleTurnOn(6, Monday, 600);
+    lightScheduler_.ScheduleTurnOn(7, Monday, 600);
+
+    SetTimeTo(Monday, 600);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(6, LightStateOn);
+    CheckLightState(7, LightStateOn);
+}
+
+TEST_F(LightSchedulerTest, MultipleScheduledEventsAtSameTimeSameLight)
+{
+    lightScheduler_.ScheduleTurnOn(6, Monday, 600);
+    lightScheduler_.ScheduleTurnOn(6, Monday, 600);
+
+    SetTimeTo(Monday, 600);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(6, LightStateOn);
+    CheckLightState(6, LightStateOn);
+}
+
+TEST_F(LightSchedulerTest, MultipleScheduledEventsAtSameTimeSameLightOnAndOff)
+{
+    lightScheduler_.ScheduleTurnOn(6, Monday, 600);
+    lightScheduler_.ScheduleTurnOff(6, Monday, 600);
+
+    SetTimeTo(Monday, 600);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    // Last schedulent event should prevail.
+    CheckLightState(6, LightStateOff);
+}
