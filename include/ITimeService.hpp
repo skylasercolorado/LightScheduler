@@ -25,8 +25,8 @@ namespace Camax
 
     struct LightSchedulerTime
     {
-        int minuteOfDay;
-        int dayOfWeek;
+        uint minuteOfDay;
+        Day dayOfWeek;
     };
 
     class ITimeService
@@ -44,9 +44,9 @@ namespace Camax
         virtual bool UnregisterForTimeServiceEvent(ObserverHandle<TimeServiceEvents> handle) = 0;
 
         // Utility functions (Not part of the specified interface).
-        static void ValidateMinute(int minute);
+        static void ValidateMinute(uint minute);
         static void ValidateDay(Day day);
-        static void ValidateDayMinute(int day, int minute);
+        static void ValidateDayMinute(Day day, uint minute);
     };
 }
 

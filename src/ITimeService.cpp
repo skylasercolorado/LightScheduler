@@ -4,10 +4,10 @@
 
 using namespace Camax;
 
-void ITimeService::ValidateMinute(int minute)
+void ITimeService::ValidateMinute(uint minute)
 {
-    const int hoursInDay = 24;
-    const int minutesInHour = 60;
+    const uint hoursInDay = 24;
+    const uint minutesInHour = 60;
 
     if (minute < 0 || minute > ((hoursInDay * minutesInHour) - 1))
     {
@@ -25,7 +25,7 @@ void ITimeService::ValidateDay(Day day)
     }
 }
 
-void ITimeService::ValidateDayMinute(int day, int minute)
+void ITimeService::ValidateDayMinute(Day day, uint minute)
 {
     ValidateDay((Monday));
     ValidateMinute(minute);

@@ -15,7 +15,7 @@ class LightSchedulerTest : public ::testing::Test
 {
     public:
 
-    const int AlarmPeriod = 60;
+    const uint AlarmPeriod = 60;
 
     LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_, AlarmPeriod)
     {
@@ -33,8 +33,8 @@ class LightSchedulerTest : public ::testing::Test
 
     }
 
-    void SetTimeTo(Day day, int minute);
-    void CheckLightState(int id, LightStatus lightStatus);
+    void SetTimeTo(Day day, uint minute);
+    void CheckLightState(uint id, LightStatus lightStatus);
 
     LightControllerStub lightControllerStub_;
     TimeServiceStub timeServiceStub_;
@@ -42,13 +42,13 @@ class LightSchedulerTest : public ::testing::Test
     LightScheduler lightScheduler_;
 };
 
-void LightSchedulerTest::SetTimeTo(Day day, int minute)
+void LightSchedulerTest::SetTimeTo(Day day, uint minute)
 {
     timeServiceStub_.SetDay(day);
     timeServiceStub_.SetMinute(minute);
 }
 
-void LightSchedulerTest::CheckLightState(int id, LightStatus lightStatus)
+void LightSchedulerTest::CheckLightState(uint id, LightStatus lightStatus)
 {
     EXPECT_EQ(lightStatus, lightControllerStub_.GetLightState(id));
 }
@@ -63,7 +63,7 @@ TEST_F(LightSchedulerTest, NoChangeToLightsDuringInitialization)
 // Testing the time_ service stub after Reset
 TEST_F(LightSchedulerTest, Create)
 {
-    EXPECT_EQ(Unknown, timeServiceStub_.GetTime().minuteOfDay);
+    EXPECT_EQ(0, timeServiceStub_.GetTime().minuteOfDay);
     EXPECT_EQ(Unknown, timeServiceStub_.GetTime().dayOfWeek);
 }
 
