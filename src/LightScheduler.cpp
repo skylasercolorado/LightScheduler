@@ -36,12 +36,9 @@ void LightScheduler::RemoveSchedule(int id, Day day, int minute)
 bool LightScheduler::compare(ScheduledLightEvent event, ScheduledLightEvent x)
 {
 
-    if(x.id_ == event.id_ &&
-       x.day_ == event.day_ &&
-       x.minuteOfDay_ == event.minuteOfDay_)
-        return true;
-    else
-        return false;
+    return event.id_ == x.id_ &&
+           event.day_ == x.day_ &&
+           event.minuteOfDay_ == x.minuteOfDay_;
 }
 
 void LightScheduler::WakeUp()
