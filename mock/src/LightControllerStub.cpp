@@ -43,6 +43,7 @@ LightStatus LightControllerStub::GetLightState(uint id)
 {
     LightControllerStore::iterator it;
 
+    //TODO: Extract find light method?
     it = lightControllerStore_.find(id);
     if(it != lightControllerStore_.end())
        return it->second;
