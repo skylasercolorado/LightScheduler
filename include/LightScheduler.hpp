@@ -48,9 +48,9 @@ namespace Camax
         ILightController &lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
+        uint alarmPeriod_;
         bool alreadyDestroyed_;
         ObserverHandle<ITimeService::TimeServiceEvents> observerHandle_;
-        uint alarmPeriod_;
         bool compare(ScheduledLightEvent event, ScheduledLightEvent x);
     };
 }
