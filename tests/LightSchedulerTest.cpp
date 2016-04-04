@@ -330,3 +330,5 @@ TEST_F(LightSchedulerTest, RemoveMultipleScheduledEvent)
     CheckLightState(6, LightStateUnknown);
     CheckLightState(7, LightStateOn);
 }
+
+//TODO: Add the pending tests on the list.
