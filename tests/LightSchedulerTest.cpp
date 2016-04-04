@@ -313,3 +313,18 @@ TEST_F(LightSchedulerTest, RemoveSchedule)
 
     CheckLightState(3, LightStateUnknown);
 }
+
+TEST_F(LightSchedulerTest, RemoveMultipleScheduledEvent)
+{
+    lightScheduler_.ScheduleTurnOn(6, Monday, 600);
+    lightScheduler_.ScheduleTurnOn(7, Monday, 600);
+
+    lightScheduler_.RemoveSchedule(6, Monday, 600);
+
+    SetTimeTo(Monday, 600);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(6, LightStateUnknown);
+    CheckLightState(7, LightStateOn);
+}
