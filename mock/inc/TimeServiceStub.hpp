@@ -25,7 +25,7 @@ namespace Camax
 
     private:
         static LightSchedulerTime time_;
-        static int periodInSeconds_;
+        static uint periodInSeconds_;
         SubjectType events_;
     };
 }
