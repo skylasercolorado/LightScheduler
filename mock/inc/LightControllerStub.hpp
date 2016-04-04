@@ -10,16 +10,16 @@ namespace Camax
     {
     public:
         typedef std::map<uint, LightStatus> LightControllerStore;
-        void TurnOn(int id);
-        void TurnOff(int id);
+        void TurnOn(uint id);
+        void TurnOff(uint id);
         // The actual mock starts from hereon forward
-        static int GetLastId();
-        static int GetLastState();
+        static uint GetLastId();
+        static LightStatus GetLastState();
         static void Reset();
         LightStatus GetLightState(uint id);
 
     private:
-        static int lastId_;
+        static uint lastId_;
         static LightStatus lastState_;
         LightControllerStore lightControllerStore_;
         void storeLightState(uint id, LightStatus state);

@@ -11,12 +11,12 @@ namespace Camax
 {
     struct ScheduledLightEvent
     {
-        int id_;
+        uint id_;
         Day day_;
         int minuteOfDay_;
         LightStatus lightStatus_;
     
-        ScheduledLightEvent(int id, Day day, int minuteOfDay, LightStatus lightStatus) :
+        ScheduledLightEvent(uint id, Day day, int minuteOfDay, LightStatus lightStatus = LightStateUnknown) :
                 id_(id), day_(day), minuteOfDay_(minuteOfDay), lightStatus_(lightStatus)  {}
     };
   

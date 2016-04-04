@@ -28,7 +28,7 @@ void LightScheduler::RemoveSchedule(int id, Day day, int minute)
     scheduledLightEvents_.erase(std::remove_if(scheduledLightEvents_.begin(), scheduledLightEvents_.end(),
                                                [&, this](ScheduledLightEvent x)
                                                {
-                                                   return this->compare(ScheduledLightEvent(id, day, minute,LightStateOn), x);
+                                                   return this->compare(ScheduledLightEvent(id, day, minute), x);
                                                }),
                                 scheduledLightEvents_.end());
 }
