@@ -17,6 +17,7 @@ class LightSchedulerTest : public ::testing::Test
 
     const uint AlarmPeriod = 60;
 
+    //TODO: These are runtime stubs. Change one of them to be a linktime stub.
     LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_, AlarmPeriod)
     {
         observerHandle_ = lightScheduler_.getObserverHandle();
@@ -331,8 +332,6 @@ TEST_F(LightSchedulerTest, RemoveMultipleScheduledEvent)
     CheckLightState(6, LightStateUnknown);
     CheckLightState(7, LightStateOn);
 }
-
-//TODO: Add the pending tests on the list.
 
 TEST_F(LightSchedulerTest, RemoveNonScheduledEvent)
 {
