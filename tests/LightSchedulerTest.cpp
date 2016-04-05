@@ -400,3 +400,53 @@ TEST_F(LightSchedulerTest, MultipleScheduledEventsAtSameTimeSameLightOnAndOff)
     // Last schedulent event should prevail.
     CheckLightState(6, LightStateOff);
 }
+
+TEST_F(LightSchedulerTest, DayRightTimeRightRightLightTurnedOff)
+{
+    lightScheduler_.ScheduleTurnOff(3, Wednesday, 1200);
+    SetTimeTo(Wednesday, 1200);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateOff);
+}
+
+TEST_F(LightSchedulerTest, DayRightTimeRightRightLightTurnedOn)
+{
+    lightScheduler_.ScheduleTurnOn(3, Wednesday, 1200);
+    SetTimeTo(Wednesday, 1200);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateOn);
+}
+
+TEST_F(LightSchedulerTest, DayWrongTimeRightNoLightsChange)
+{
+    lightScheduler_.ScheduleTurnOn(3, Wednesday, 1200);
+    SetTimeTo(Thursday, 1200);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, DayRightTimeWrongNoLightsChange)
+{
+    lightScheduler_.ScheduleTurnOn(3, Wednesday, 1200);
+    SetTimeTo(Wednesday, 23);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, DayWrongTimeWrongNoLightsChange)
+{
+    lightScheduler_.ScheduleTurnOn(3, Wednesday, 1200);
+    SetTimeTo(Thursday, 23);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateUnknown);
+}
