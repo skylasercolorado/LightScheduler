@@ -17,7 +17,6 @@ class LightSchedulerTest : public ::testing::Test
 
     const uint AlarmPeriod = 60;
 
-    //TODO: These are runtime stubs. Change one of them to be a linktime stub.
     LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_, AlarmPeriod)
     {
         observerHandle_ = lightScheduler_.getObserverHandle();
@@ -26,7 +25,7 @@ class LightSchedulerTest : public ::testing::Test
     virtual void SetUp()
     {
         lightControllerStub_.Reset();
-        TimeServiceStub::Reset();
+        timeServiceStub_.Reset();
     }
 
     virtual void TearDown()

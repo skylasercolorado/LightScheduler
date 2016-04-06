@@ -7,9 +7,6 @@
 using namespace Camax;
 using namespace std;
 
-LightSchedulerTime TimeServiceStub::time_ = {0, Unknown};
-uint TimeServiceStub::periodInSeconds_ = 0;
-
 void TimeServiceStub::Reset()
 {
     time_.minuteOfDay = 0;

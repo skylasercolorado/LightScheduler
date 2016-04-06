@@ -3,9 +3,6 @@
 using Camax::LightControllerStub;
 using namespace Camax;
 
-//uint LightControllerStub::lastId_ = LightIdUnknown;
-//LightStatus LightControllerStub::lastState_ = LightStateUnknown;
-
 void LightControllerStub::Reset()
 {
     lastId_ = LightIdUnknown;

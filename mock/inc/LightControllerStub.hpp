@@ -19,9 +19,7 @@ namespace Camax
         LightStatus GetLightState(uint id);
 
     private:
-//        static uint lastId_;
         uint lastId_;
-//        static LightStatus lastState_;
         LightStatus lastState_;
         LightControllerStore lightControllerStore_;
         void storeLightState(uint id, LightStatus state);

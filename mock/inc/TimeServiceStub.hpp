@@ -12,10 +12,10 @@ namespace Camax
         virtual LightSchedulerTime &GetTime();
         virtual void SetAlarmPeriod(uint periodInSeconds);
         // The actual mock starts from hereon forward
-        static void SetMinute(uint minute);
-        static void SetDay(Day day);
-        static void Reset();
-        static uint GetAlarmPeriod();
+        void SetMinute(uint minute);
+        void SetDay(Day day);
+        void Reset();
+        uint GetAlarmPeriod();
         ObserverHandle<TimeServiceEvents> RegisterForTimeServiceEvent(TimeServiceEvents event,
                                                                               uint alarmPeriod,
                                                                               SubjectType::EventHandler notificationHandler);
@@ -24,8 +24,8 @@ namespace Camax
         bool FindObserver(ObserverHandle<TimeServiceEvents> handle);
 
     private:
-        static LightSchedulerTime time_;
-        static uint periodInSeconds_;
+        LightSchedulerTime time_;
+        uint periodInSeconds_;
         SubjectType events_;
     };
 }
