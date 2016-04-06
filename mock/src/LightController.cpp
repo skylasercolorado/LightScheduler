@@ -1,20 +1,20 @@
-#include "LightControllerStub.hpp"
+#include "LightController.hpp"
 
-using Camax::LightControllerStub;
+using Camax::LightController;
 using namespace Camax;
 
-uint LightControllerStub::lastId_ = LightIdUnknown;
-LightStatus LightControllerStub::lastState_ = LightStateUnknown;
-LightControllerStub::LightControllerStore LightControllerStub::lightControllerStore_;
+uint LightController::lastId_ = LightIdUnknown;
+LightStatus LightController::lastState_ = LightStateUnknown;
+LightController::LightControllerStore LightController::lightControllerStore_;
 
-void LightControllerStub::Reset()
+void LightController::Reset()
 {
     lastId_ = LightIdUnknown;
     lastState_ = LightStateUnknown;
     lightControllerStore_.clear();
 }
 
-void LightControllerStub::TurnOn(uint id)
+void LightController::TurnOn(uint id)
 {
     lastId_ = id;
     lastState_ = LightStateOn;
@@ -22,7 +22,7 @@ void LightControllerStub::TurnOn(uint id)
     storeLightState(lastId_, lastState_);
 }
 
-void LightControllerStub::TurnOff(uint id)
+void LightController::TurnOff(uint id)
 {
     lastId_ = id;
     lastState_ = LightStateOff;
@@ -30,7 +30,7 @@ void LightControllerStub::TurnOff(uint id)
     storeLightState(lastId_, lastState_);
 }
 
-void LightControllerStub::storeLightState(uint id, LightStatus state)
+void LightController::storeLightState(uint id, LightStatus state)
 {
     LightControllerStore::iterator it;
 
@@ -41,7 +41,7 @@ void LightControllerStub::storeLightState(uint id, LightStatus state)
         lightControllerStore_.insert({id, state});
 }
 
-LightStatus LightControllerStub::GetLightState(uint id)
+LightStatus LightController::GetLightState(uint id)
 {
     LightControllerStore::iterator it;
 
@@ -52,12 +52,12 @@ LightStatus LightControllerStub::GetLightState(uint id)
        return LightStateUnknown;
 }
 
-uint LightControllerStub::GetLastId()
+uint LightController::GetLastId()
 {
     return lastId_;
 }
 
-LightStatus LightControllerStub::GetLastState()
+LightStatus LightController::GetLastState()
 {
     return lastState_;
 }

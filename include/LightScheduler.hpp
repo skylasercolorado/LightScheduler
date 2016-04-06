@@ -4,7 +4,7 @@
 #include "ITimeService.hpp"
 #include "ILightController.hpp"
 #include <vector>
-#include <LightControllerStub.hpp>
+#include <LightController.hpp>
 
 using namespace std;
 
@@ -49,7 +49,7 @@ namespace Camax
     private:
         vector<ScheduledLightEvent> scheduledLightEvents_;
         ITimeService &timeService_;
-        LightControllerStub lightController_;
+        LightController lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
         uint alarmPeriod_;

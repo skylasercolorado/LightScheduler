@@ -2,7 +2,7 @@
 #include "gmock/gmock.h"
 
 #include "LightScheduler.hpp"
-#include "LightControllerStub.hpp"
+#include "LightController.hpp"
 #include "TimeServiceStub.hpp"
 #include <functional>
 #include <system_error>
@@ -26,7 +26,7 @@ class LightSchedulerTest : public ::testing::Test
 
     virtual void SetUp()
     {
-        LightControllerStub::Reset();
+        LightController::Reset();
         TimeServiceStub::Reset();
     }
 
@@ -38,7 +38,7 @@ class LightSchedulerTest : public ::testing::Test
     void SetTimeTo(Day day, uint minute);
     void CheckLightState(uint id, LightStatus lightStatus);
 
-    LightControllerStub lightControllerStub_;
+    LightController lightControllerStub_;
     TimeServiceStub timeServiceStub_;
     ObserverHandle<ITimeService::TimeServiceEvents> observerHandle_;
     LightScheduler lightScheduler_;

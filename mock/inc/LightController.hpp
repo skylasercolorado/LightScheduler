@@ -6,7 +6,7 @@
 
 namespace Camax
 {
-    class LightControllerStub : public ILightController
+    class LightController : public ILightController
     {
     public:
         typedef std::map<uint, LightStatus> LightControllerStore;
