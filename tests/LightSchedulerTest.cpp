@@ -25,7 +25,7 @@ class LightSchedulerTest : public ::testing::Test
 
     virtual void SetUp()
     {
-        LightControllerStub::Reset();
+        lightControllerStub_.Reset();
         TimeServiceStub::Reset();
     }
 
