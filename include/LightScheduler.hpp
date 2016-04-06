@@ -4,6 +4,7 @@
 #include "ITimeService.hpp"
 #include "ILightController.hpp"
 #include <vector>
+#include <LightControllerStub.hpp>
 
 using namespace std;
 
@@ -23,8 +24,11 @@ namespace Camax
     class LightScheduler
     {
     public:
-        LightScheduler(ITimeService &_timeService, ILightController &_lightController, uint _alarmPeriod) :
-                timeService_(_timeService), lightController_(_lightController), alarmPeriod_(_alarmPeriod),
+//        LightScheduler(ITimeService &_timeService, ILightController &_lightController, uint _alarmPeriod) :
+//                timeService_(_timeService), lightController_(_lightController), alarmPeriod_(_alarmPeriod),
+//                alreadyDestroyed_(false)
+        LightScheduler(ITimeService &_timeService, uint _alarmPeriod) :
+                timeService_(_timeService), alarmPeriod_(_alarmPeriod),
                 alreadyDestroyed_(false)
         {
             observerHandle_ = timeService_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive,
@@ -45,7 +49,7 @@ namespace Camax
     private:
         vector<ScheduledLightEvent> scheduledLightEvents_;
         ITimeService &timeService_;
-        ILightController &lightController_;
+        LightControllerStub lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
         uint alarmPeriod_;

@@ -5,11 +5,13 @@ using namespace Camax;
 
 uint LightControllerStub::lastId_ = LightIdUnknown;
 LightStatus LightControllerStub::lastState_ = LightStateUnknown;
+LightControllerStub::LightControllerStore LightControllerStub::lightControllerStore_;
 
 void LightControllerStub::Reset()
 {
     lastId_ = LightIdUnknown;
     lastState_ = LightStateUnknown;
+    lightControllerStore_.clear();
 }
 
 void LightControllerStub::TurnOn(uint id)
