@@ -1,6 +1,6 @@
 # Clion comes with cmake 3.3. However, Linux Mint 17.3 has version 2.8.
 cmake_minimum_required(VERSION 2.8)
-project(helloClion)
+project(LightScheduler)
 
 # Uncomment to enable 'debug' code
 #add_definitions(-DDEBUG)
