@@ -54,14 +54,19 @@ void LightScheduler::WakeUp()
 
 void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator &event)
 {
+    ILightController *lightController = lightController_.find(event->id_)->second;
+    if(nullptr == lightController)
+        throw invalid_argument("Could not find lightController.");
+
+
     switch (event->lightStatus_)
     {
         case LightStateOn:
-            lightController_.TurnOn(event->id_);
+            lightController->TurnOn(event->id_);
             break;
 
         case LightStateOff:
-            lightController_.TurnOff(event->id_);
+            lightController->TurnOff(event->id_);
             break;
 
         default:
@@ -92,4 +97,12 @@ void LightScheduler::destroy()
 ObserverHandle<ITimeService::TimeServiceEvents> LightScheduler::getObserverHandle()
 {
     return observerHandle_;
+}
+
+void LightScheduler::AddLightController(uint id, ILightController *lightController)
+{
+    if(lightController_.find(id) != lightController_.end())
+        lightController_.at(id) = lightController;
+    else
+        lightController_.insert({id, lightController});
 }
