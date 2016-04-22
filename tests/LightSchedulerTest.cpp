@@ -448,3 +448,14 @@ TEST_F(LightSchedulerTest, DayWrongTimeWrongNoLightsChange)
 
     CheckLightState(3, LightStateUnknown);
 }
+
+TEST(Experiments, CreateLightControllerOnTheFly)
+{
+    LightControllerStub *otherLightController = new LightControllerStub;
+    TimeServiceStub *otherTimeService = new TimeServiceStub;
+
+    LightScheduler *otherLightScheduler = new LightScheduler(*otherTimeService, *otherLightController, 0);
+
+//    (*otherLightController).TurnOn(5);
+    otherLightScheduler->WakeUp();
+}
