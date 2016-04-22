@@ -61,7 +61,5 @@ namespace Camax
 //TODO:- brightening()
 //TODO:- dimming()
 //TODO:- strobe()
-//TODO:- each light has its own controller? Yep, this is part of the new marketing requirements.
-//TODO:- am I using the same controller for all lights right now? Yep. That was the requirement back then.
 
 #endif // CAMAX_LIGHTSCHEDULER_HPP
