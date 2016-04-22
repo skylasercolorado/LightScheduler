@@ -17,7 +17,7 @@ class LightSchedulerTest : public ::testing::Test
 
     const uint AlarmPeriod = 60;
 
-    LightSchedulerTest() : lightScheduler_(timeServiceStub_, lightControllerStub_, AlarmPeriod)
+    LightSchedulerTest() : lightScheduler_(timeServiceStub_, &lightControllerStub_, AlarmPeriod)
     {
         observerHandle_ = lightScheduler_.getObserverHandle();
     }
@@ -279,7 +279,7 @@ TEST_F(LightSchedulerTest, DestructorWithArtificialBlock)
     ObserverHandle<ITimeService::TimeServiceEvents> testHandle;
 
     {
-        LightScheduler testInstance(timeServiceStub_, lightControllerStub_, AlarmPeriod);
+        LightScheduler testInstance(timeServiceStub_, &lightControllerStub_, AlarmPeriod);
         testHandle = testInstance.getObserverHandle();
 
         EXPECT_TRUE(timeServiceStub_.FindObserver(testHandle));
@@ -292,7 +292,7 @@ TEST_F(LightSchedulerTest, DestructorWithHelperFunction)
 {
     ObserverHandle<ITimeService::TimeServiceEvents> testHandle;
 
-    LightScheduler testInstance(timeServiceStub_, lightControllerStub_, AlarmPeriod);
+    LightScheduler testInstance(timeServiceStub_, &lightControllerStub_, AlarmPeriod);
     testHandle = testInstance.getObserverHandle();
 
     EXPECT_TRUE(timeServiceStub_.FindObserver(testHandle));
@@ -454,7 +454,7 @@ TEST(Experiments, CreateLightControllerOnTheFly)
     LightControllerStub *otherLightController = new LightControllerStub;
     TimeServiceStub *otherTimeService = new TimeServiceStub;
 
-    LightScheduler *otherLightScheduler = new LightScheduler(*otherTimeService, *otherLightController, 0);
+    LightScheduler *otherLightScheduler = new LightScheduler(*otherTimeService, otherLightController, 0);
 
 //    (*otherLightController).TurnOn(5);
     otherLightScheduler->WakeUp();

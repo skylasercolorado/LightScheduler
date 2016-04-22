@@ -23,8 +23,8 @@ namespace Camax
     class LightScheduler
     {
     public:
-        LightScheduler(ITimeService &_timeService, ILightController &_lightController, uint _alarmPeriod) :
-                timeService_(_timeService), lightController_(_lightController), alarmPeriod_(_alarmPeriod),
+        LightScheduler(ITimeService &_timeService, ILightController *_lightController = nullptr, uint _alarmPeriod = 0) :
+                timeService_(_timeService), lightController_(*_lightController), alarmPeriod_(_alarmPeriod),
                 alreadyDestroyed_(false)
         {
             observerHandle_ = timeService_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive,
