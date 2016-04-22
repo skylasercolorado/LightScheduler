@@ -26,6 +26,12 @@ class LightSchedulerTest : public ::testing::Test
     {
         lightControllerStub_.Reset();
         timeServiceStub_.Reset();
+
+        lightScheduler_.AddLightController(3, &lightControllerStub_);
+        lightScheduler_.AddLightController(4, &lightControllerStub_);
+        lightScheduler_.AddLightController(6, &lightControllerStub_);
+        lightScheduler_.AddLightController(7, &lightControllerStub_);
+        lightScheduler_.AddLightController(12, &lightControllerStub_);
     }
 
     virtual void TearDown()
