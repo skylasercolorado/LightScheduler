@@ -24,14 +24,12 @@ namespace Camax
     {
     public:
         LightScheduler(ITimeService &_timeService, uint _alarmPeriod) :
-                timeService_(_timeService), /*lightController_(*_lightController),*/ alarmPeriod_(_alarmPeriod),
+                timeService_(_timeService), alarmPeriod_(_alarmPeriod),
                 alreadyDestroyed_(false)
         {
             observerHandle_ = timeService_.RegisterForTimeServiceEvent(ITimeService::TimeServiceEvents::AlarmActive,
                                                                        alarmPeriod_,
                                                                        std::bind(&LightScheduler::WakeUp, this));
-//            if(nullptr != _lightController)
-//                lightController_.push_back(_lightController);
         }
         ~LightScheduler()
         {
@@ -48,7 +46,6 @@ namespace Camax
     private:
         vector<ScheduledLightEvent> scheduledLightEvents_;
         ITimeService &timeService_;
-        //ILightController &lightController_;
         std::map<uint, ILightController*> lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);

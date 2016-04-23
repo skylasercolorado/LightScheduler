@@ -465,3 +465,16 @@ TEST(Experiments, CreateLightControllerOnTheFly)
 //    (*otherLightController).TurnOn(5);
     otherLightScheduler->WakeUp();
 }
+
+TEST_F(LightSchedulerTest, ScheduleTwoEventsAtTheSameTimeCatchExceptionFromNonExistentLightController)
+{
+    lightScheduler_.ScheduleTurnOn(3, Sunday, 1200);
+    lightScheduler_.ScheduleTurnOn(13, Sunday, 1200);
+
+    SetTimeTo(Sunday, 1200);
+
+    EXPECT_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive), invalid_argument);
+
+    CheckLightState(3, LightStateOn);
+    CheckLightState(13, LightStateUnknown);
+}
