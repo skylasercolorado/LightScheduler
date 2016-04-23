@@ -55,7 +55,8 @@ void LightScheduler::WakeUp()
 void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator &event)
 {
     ILightController *lightController = nullptr;
-    std::map<uint, ILightController*>::iterator it = lightController_.find(event->id_);
+//    std::map<uint, ILightController*>::iterator it = lightController_.find(event->id_);
+    LightControllers::iterator it = lightController_.find(event->id_);
     if(it != lightController_.end())
         lightController = lightController_.find(event->id_)->second;
     else

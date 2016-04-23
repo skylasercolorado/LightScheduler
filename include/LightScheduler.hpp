@@ -19,6 +19,8 @@ namespace Camax
         ScheduledLightEvent(uint id, Day day, uint minuteOfDay, LightStatus lightStatus = LightStateUnknown) :
                 id_(id), day_(day), minuteOfDay_(minuteOfDay), lightStatus_(lightStatus)  {}
     };
+
+    typedef std::map<uint, ILightController*> LightControllers;
   
     class LightScheduler
     {
@@ -46,7 +48,8 @@ namespace Camax
     private:
         vector<ScheduledLightEvent> scheduledLightEvents_;
         ITimeService &timeService_;
-        std::map<uint, ILightController*> lightController_;
+//        std::map<uint, ILightController*> lightController_;
+        LightControllers lightController_;
         bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
         void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
         uint alarmPeriod_;
