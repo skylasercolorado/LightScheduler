@@ -455,17 +455,6 @@ TEST_F(LightSchedulerTest, DayWrongTimeWrongNoLightsChange)
     CheckLightState(3, LightStateUnknown);
 }
 
-TEST(Experiments, CreateLightControllerOnTheFly)
-{
-//    LightControllerStub *otherLightController = new LightControllerStub;
-    TimeServiceStub *otherTimeService = new TimeServiceStub;
-
-    LightScheduler *otherLightScheduler = new LightScheduler(*otherTimeService, 0);
-
-//    (*otherLightController).TurnOn(5);
-    otherLightScheduler->WakeUp();
-}
-
 TEST_F(LightSchedulerTest, ScheduleTwoEventsAtTheSameTimeCatchExceptionFromNonExistentLightController)
 {
     lightScheduler_.ScheduleTurnOn(3, Sunday, 1200);
@@ -477,4 +466,35 @@ TEST_F(LightSchedulerTest, ScheduleTwoEventsAtTheSameTimeCatchExceptionFromNonEx
 
     CheckLightState(3, LightStateOn);
     CheckLightState(13, LightStateUnknown);
+}
+
+TEST_F(LightSchedulerTest, ScheduleTwoEventsAtTheSameTimeCatchExceptionFromNonExistentLightControllerThenAddIt)
+{
+    lightScheduler_.ScheduleTurnOn(3, Sunday, 1200);
+    lightScheduler_.ScheduleTurnOn(13, Sunday, 1200);
+
+    SetTimeTo(Sunday, 1200);
+
+    EXPECT_THROW(timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive), invalid_argument);
+
+    CheckLightState(3, LightStateOn);
+    CheckLightState(13, LightStateUnknown);
+
+    lightScheduler_.AddLightController(13, &lightControllerStub_);
+
+    timeServiceStub_.NotifyObservers(ITimeService::TimeServiceEvents::AlarmActive);
+
+    CheckLightState(3, LightStateOn);
+    CheckLightState(13, LightStateOn);
+}
+
+TEST(Experiments, CreateLightControllerOnTheFly)
+{
+//    LightControllerStub *otherLightController = new LightControllerStub;
+    TimeServiceStub *otherTimeService = new TimeServiceStub;
+
+    LightScheduler *otherLightScheduler = new LightScheduler(*otherTimeService, 0);
+
+//    (*otherLightController).TurnOn(5);
+    otherLightScheduler->WakeUp();
 }
