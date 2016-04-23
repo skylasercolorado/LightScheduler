@@ -52,10 +52,9 @@ void LightScheduler::WakeUp()
     }
 }
 
-void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator &event)
+void LightScheduler::operateLight(vector<ScheduledLightEvent>::iterator &event)
 {
     ILightController *lightController = nullptr;
-//    std::map<uint, ILightController*>::iterator it = lightController_.find(event->id_);
     LightControllers::iterator it = lightController_.find(event->id_);
     if(it != lightController_.end())
         lightController = lightController_.find(event->id_)->second;
@@ -77,7 +76,7 @@ void LightScheduler::operateLight(vector<Camax::ScheduledLightEvent>::iterator &
     }
 }
 
-bool LightScheduler::doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event)
+bool LightScheduler::doesLightOperateNow(vector<ScheduledLightEvent>::iterator &event)
 {
     Day today = timeService_.GetTime().dayOfWeek;
     uint thisMinute = timeService_.GetTime().minuteOfDay;

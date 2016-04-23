@@ -9,19 +9,6 @@ using namespace std;
 
 namespace Camax
 {
-    struct ScheduledLightEvent
-    {
-        uint id_;
-        Day day_;
-        uint minuteOfDay_;
-        LightStatus lightStatus_;
-    
-        ScheduledLightEvent(uint id, Day day, uint minuteOfDay, LightStatus lightStatus = LightStateUnknown) :
-                id_(id), day_(day), minuteOfDay_(minuteOfDay), lightStatus_(lightStatus)  {}
-    };
-
-    typedef std::map<uint, ILightController*> LightControllers;
-  
     class LightScheduler
     {
     public:
@@ -46,12 +33,24 @@ namespace Camax
         void AddLightController(uint id, ILightController *lightController);
 
     private:
+        struct ScheduledLightEvent
+        {
+            uint id_;
+            Day day_;
+            uint minuteOfDay_;
+            LightStatus lightStatus_;
+
+            ScheduledLightEvent(uint id, Day day, uint minuteOfDay, LightStatus lightStatus = LightStateUnknown) :
+                    id_(id), day_(day), minuteOfDay_(minuteOfDay), lightStatus_(lightStatus)  {}
+        };
+
+        typedef std::map<uint, ILightController*> LightControllers;
+
         vector<ScheduledLightEvent> scheduledLightEvents_;
         ITimeService &timeService_;
-//        std::map<uint, ILightController*> lightController_;
         LightControllers lightController_;
-        bool doesLightOperateNow(vector<Camax::ScheduledLightEvent>::iterator &event);
-        void operateLight(vector<Camax::ScheduledLightEvent>::iterator &event);
+        bool doesLightOperateNow(vector<ScheduledLightEvent>::iterator &event);
+        void operateLight(vector<ScheduledLightEvent>::iterator &event);
         uint alarmPeriod_;
         bool alreadyDestroyed_;
         ObserverHandle<ITimeService::TimeServiceEvents> observerHandle_;
