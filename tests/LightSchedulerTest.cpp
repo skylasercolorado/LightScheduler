@@ -6,6 +6,7 @@
 #include "TimeServiceStub.hpp"
 #include <functional>
 #include <system_error>
+#include <CountingLightController.hpp>
 
 using namespace Camax;
 using namespace std;
@@ -497,4 +498,23 @@ TEST(Experiments, CreateLightControllerOnTheFly)
 
 //    (*otherLightController).TurnOn(5);
     otherLightScheduler->WakeUp();
+}
+
+TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
+{
+    CountingLightController *type1Driver = new CountingLightController();
+    LightControllerStub *type2Driver = new LightControllerStub;
+
+    map<uint, ILightController*> lightControllers;
+
+    lightControllers.insert({3, type1Driver});
+    lightControllers.insert(make_pair(4, type2Driver));
+
+    map<uint, ILightController*>::iterator it;
+    if(lightControllers.end() != (it = lightControllers.find(3)))
+    {
+        it->second->TurnOn(3);
+    }
+
+    EXPECT_EQ(1, type1Driver->getCallCounter());
 }

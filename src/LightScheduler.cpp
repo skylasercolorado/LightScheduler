@@ -55,9 +55,9 @@ void LightScheduler::WakeUp()
 void LightScheduler::operateLight(vector<ScheduledLightEvent>::iterator &event)
 {
     ILightController *lightController = nullptr;
-    LightControllers::iterator it = lightController_.find(event->id_);
-    if(it != lightController_.end())
-        lightController = lightController_.find(event->id_)->second;
+    LightControllers::iterator it = lightControllers_.find(event->id_);
+    if(it != lightControllers_.end())
+        lightController = lightControllers_.find(event->id_)->second;
     else
         throw invalid_argument("Could not find lightController.");
 
@@ -103,8 +103,8 @@ ObserverHandle<ITimeService::TimeServiceEvents> LightScheduler::getObserverHandl
 
 void LightScheduler::AddLightController(uint id, ILightController *lightController)
 {
-    if(lightController_.find(id) != lightController_.end())
-        lightController_.at(id) = lightController;
+    if(lightControllers_.find(id) != lightControllers_.end())
+        lightControllers_.at(id) = lightController;
     else
-        lightController_.insert({id, lightController});
+        lightControllers_.insert({id, lightController});
 }
