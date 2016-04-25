@@ -508,8 +508,8 @@ TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
 
     map<uint, ILightController*> lightControllers;
 
-    lightControllers.insert({3, type1Driver});
-    lightControllers.insert(make_pair(4, type2Driver));
+    lightControllers.insert({5, type1Driver});
+    lightControllers.insert(make_pair(7, type2Driver));
 
     for_each(lightControllers.begin(), lightControllers.end(),
              [&](pair<uint, ILightController*> lightController)
@@ -518,6 +518,9 @@ TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
              }
     );
 
-    EXPECT_EQ(1, type1Driver->getCallCounter());
-    EXPECT_EQ(LightStateOn, type2Driver->GetLightState(4));
+    if(lightControllers.find(5) != lightControllers.end())
+        lightControllers.find(5)->second->TurnOff(5);
+
+    EXPECT_EQ(2, type1Driver->getCallCounter());
+    EXPECT_EQ(LightStateOn, type2Driver->GetLightState(7));
 }
