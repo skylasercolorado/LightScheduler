@@ -504,7 +504,6 @@ TEST(Experiments, CreateLightControllerOnTheFly)
 void myfunc(pair<uint, ILightController*> n)
 {
     n.second->TurnOn(n.first);
-//            ->second->TurnOn(it->first);
 }
 
 TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
@@ -517,14 +516,7 @@ TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
     lightControllers.insert({3, type1Driver});
     lightControllers.insert(make_pair(4, type2Driver));
 
-//    map<uint, ILightController*>::iterator it;
-//    if(lightControllers.end() != (it = lightControllers.find(3)))
-//    {
-//        it->second->TurnOn(3);
-//        EXPECT_EQ(1, type1Driver->getCallCounter());
-//    }
-
-    for_each(lightControllers.begin(), lightControllers.end(), myfunc);
+    for_each(lightControllers.begin(), lightControllers.end(), [](pair<uint, ILightController*> n){n.second->TurnOn(n.first);});
 
     EXPECT_EQ(1, type1Driver->getCallCounter());
 }
