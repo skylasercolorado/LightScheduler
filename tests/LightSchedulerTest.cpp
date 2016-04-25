@@ -501,22 +501,23 @@ TEST(Experiments, CreateLightControllerOnTheFly)
     otherLightScheduler->WakeUp();
 }
 
-void myfunc(pair<uint, ILightController*> n)
-{
-    n.second->TurnOn(n.first);
-}
-
 TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
 {
     CountingLightController *type1Driver = new CountingLightController();
-    LightControllerStub *type2Driver = new LightControllerStub;
+    LightControllerStub     *type2Driver = new LightControllerStub;
 
     map<uint, ILightController*> lightControllers;
 
     lightControllers.insert({3, type1Driver});
     lightControllers.insert(make_pair(4, type2Driver));
 
-    for_each(lightControllers.begin(), lightControllers.end(), [](pair<uint, ILightController*> n){n.second->TurnOn(n.first);});
+    for_each(lightControllers.begin(), lightControllers.end(),
+             [&](pair<uint, ILightController*> lightController)
+             {
+                 lightController.second->TurnOn(lightController.first);
+             }
+    );
 
     EXPECT_EQ(1, type1Driver->getCallCounter());
+    EXPECT_EQ(LightStateOn, type2Driver->GetLightState(4));
 }
