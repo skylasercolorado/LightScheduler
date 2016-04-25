@@ -7,6 +7,7 @@
 #include <functional>
 #include <system_error>
 #include <CountingLightController.hpp>
+#include <algorithm>
 
 using namespace Camax;
 using namespace std;
@@ -500,6 +501,12 @@ TEST(Experiments, CreateLightControllerOnTheFly)
     otherLightScheduler->WakeUp();
 }
 
+void myfunc(pair<uint, ILightController*> n)
+{
+    n.second->TurnOn(n.first);
+//            ->second->TurnOn(it->first);
+}
+
 TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
 {
     CountingLightController *type1Driver = new CountingLightController();
@@ -510,11 +517,14 @@ TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
     lightControllers.insert({3, type1Driver});
     lightControllers.insert(make_pair(4, type2Driver));
 
-    map<uint, ILightController*>::iterator it;
-    if(lightControllers.end() != (it = lightControllers.find(3)))
-    {
-        it->second->TurnOn(3);
-    }
+//    map<uint, ILightController*>::iterator it;
+//    if(lightControllers.end() != (it = lightControllers.find(3)))
+//    {
+//        it->second->TurnOn(3);
+//        EXPECT_EQ(1, type1Driver->getCallCounter());
+//    }
+
+    for_each(lightControllers.begin(), lightControllers.end(), myfunc);
 
     EXPECT_EQ(1, type1Driver->getCallCounter());
 }
