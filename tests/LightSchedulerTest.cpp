@@ -545,3 +545,12 @@ TEST_F(LightSchedulerTest, LightStrobe)
 
     CheckLightState(3, LightStateStrobed);
 }
+
+TEST(LightControllerTest, UnimplementedNonPureVirtualCallsDoNothing)
+{
+    CountingLightController *driver = new CountingLightController();
+
+    driver->Brighten(3);
+
+    EXPECT_EQ(0, driver->getCallCounter());
+}
