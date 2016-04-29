@@ -61,15 +61,15 @@ LightStatus LightControllerStub::GetLastState()
 
 void LightControllerStub::Brighten(uint id)
 {
-
+    setLightState(id, LightStateBrightened);
 }
 
 void LightControllerStub::Dim(uint id)
 {
-
+    setLightState(id, LightStateDimmed);
 }
 
 void LightControllerStub::Strobe(uint id)
 {
-
+    setLightState(id, LightStateStrobed);
 }

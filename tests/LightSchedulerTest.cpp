@@ -524,3 +524,24 @@ TEST(DifferentLightControllers, TurnOnDifferentDriverTypes)
     EXPECT_EQ(2, type1Driver->getCallCounter());
     EXPECT_EQ(LightStateOn, type2Driver->GetLightState(7));
 }
+
+TEST_F(LightSchedulerTest, LightBright)
+{
+    lightControllerStub_.Brighten(3);
+
+    CheckLightState(3, LightStateBrightened);
+}
+
+TEST_F(LightSchedulerTest, LightDim)
+{
+    lightControllerStub_.Dim(3);
+
+    CheckLightState(3, LightStateDimmed);
+}
+
+TEST_F(LightSchedulerTest, LightStrobe)
+{
+    lightControllerStub_.Strobe(3);
+
+    CheckLightState(3, LightStateStrobed);
+}
