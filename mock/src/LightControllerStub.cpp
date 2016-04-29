@@ -3,6 +3,14 @@
 using Camax::LightControllerStub;
 using namespace Camax;
 
+void LightControllerStub::setLightState(uint id, LightStatus state)
+{
+    lastId_ = id;
+    lastState_ = state;
+
+    storeLightState(lastId_, lastState_);
+}
+
 void LightControllerStub::Reset()
 {
     lastId_ = LightIdUnknown;
@@ -11,18 +19,12 @@ void LightControllerStub::Reset()
 
 void LightControllerStub::TurnOn(uint id)
 {
-    lastId_ = id;
-    lastState_ = LightStateOn;
-
-    storeLightState(lastId_, lastState_);
+    setLightState(id, LightStateOn);
 }
 
 void LightControllerStub::TurnOff(uint id)
 {
-    lastId_ = id;
-    lastState_ = LightStateOff;
-
-    storeLightState(lastId_, lastState_);
+    setLightState(id, LightStateOff);
 }
 
 void LightControllerStub::storeLightState(uint id, LightStatus state)
@@ -55,4 +57,19 @@ uint LightControllerStub::GetLastId()
 LightStatus LightControllerStub::GetLastState()
 {
     return lastState_;
+}
+
+void LightControllerStub::Brighten(uint id)
+{
+
+}
+
+void LightControllerStub::Dim(uint id)
+{
+
+}
+
+void LightControllerStub::Strobe(uint id)
+{
+
 }
